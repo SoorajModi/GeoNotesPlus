@@ -3,7 +3,7 @@ package de.hauke_stieler.geonotes.notes;
 import android.net.Uri;
 
 public class Note {
-    enum MediaType {
+    public enum MediaType {
         NULL,
         IMAGE,
         AUDIO

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -193,7 +194,9 @@ public class Map {
                 if (marker.getId() != null) {
                     noteStore.updateDescription(Long.parseLong(marker.getId()), marker.getSnippet());
                 } else {
-                    long id = noteStore.addNote(marker.getSnippet(), marker.getPosition().getLatitude(), marker.getPosition().getLongitude());
+                    // MediaType and URI will be null until image/audio notes are fully implemented
+                    Note newNote = new Note(0, marker.getSnippet(), marker.getPosition().getLatitude(), marker.getPosition().getLongitude(), Note.MediaType.NULL, Uri.parse(""));
+                    long id = noteStore.addNote(newNote);
                     marker.setId("" + id);
                 }
 
