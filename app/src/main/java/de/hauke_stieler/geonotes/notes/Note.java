@@ -16,12 +16,12 @@ public class Note {
     public final Uri mediaURI;
     public final MediaType mediaType;
 
-    public Note(long id, String description, double lat, double lon, Uri mediaURI, MediaType mediaType) {
+    public Note(long id, String description, double lat, double lon, MediaType mediaType, Uri mediaURI) {
         this.id = id;
         this.description = description;
         this.lat = lat;
         this.lon = lon;
-        this.mediaURI = mediaURI;
         this.mediaType = mediaType;
+        this.mediaURI = mediaURI;
     }
 }
