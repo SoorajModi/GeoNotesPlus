@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.provider.MediaStore;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
@@ -183,6 +184,7 @@ public class Map {
                 // Task came from database and should therefore be removed.
                 if (marker.getId() != null) {
                     noteStore.removeNote(Long.parseLong(marker.getId()));
+                    // TODO: Remove media file from storage?
                 }
                 map.getOverlays().remove(marker);
             }
@@ -198,6 +200,7 @@ public class Map {
                     Note newNote = new Note(0, marker.getSnippet(), marker.getPosition().getLatitude(), marker.getPosition().getLongitude(), Note.MediaType.NULL, Uri.parse(""));
                     long id = noteStore.addNote(newNote);
                     marker.setId("" + id);
+                    // TODO: Saving the audio or image file using MediaStore API
                 }
 
                 setNormalIcon(marker);
