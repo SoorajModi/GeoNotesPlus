@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // Set HTML text of copyright label
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         createMap(context);
 
         preferences = getSharedPreferences(getString(R.string.pref_file), MODE_PRIVATE);
-        preferences.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> preferenceChanged(sharedPreferences, key));
+        preferences.registerOnSharedPreferenceChangeListener(this::preferenceChanged);
 
         loadPreferences();
     }
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         // Keep device on
         final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "geonotes:wakelock");
-        wakeLock.acquire();
+        wakeLock.acquire(10*60*1000L /*10 minutes*/);
 
         Drawable locationIcon = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_location, null);
         Drawable selectedIcon = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_note_selected, null);
@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -158,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         requestPermissionsIfNecessary(permissions);
     }
 
@@ -196,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
         @SuppressLint("RestrictedApi")
         TouchDownListener touchDownListener = () -> {
-            ActionMenuItemView menuItem = (ActionMenuItemView) findViewById(R.id.toolbar_btn_gps_follow);
+            ActionMenuItemView menuItem = findViewById(R.id.toolbar_btn_gps_follow);
             if (menuItem != null) {
                 menuItem.setIcon(getResources().getDrawable(R.drawable.ic_location_searching));
             }
@@ -215,6 +216,6 @@ public class MainActivity extends AppCompatActivity {
         editor.putFloat(getString(R.string.pref_last_location_lat), (float) location.getLatitude());
         editor.putFloat(getString(R.string.pref_last_location_lon), (float) location.getLongitude());
         editor.putFloat(getString(R.string.pref_last_location_zoom), zoom);
-        editor.commit();
+        editor.apply();
     }
 }
