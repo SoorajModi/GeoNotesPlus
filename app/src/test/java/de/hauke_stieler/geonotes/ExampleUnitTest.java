@@ -3,6 +3,7 @@ package de.hauke_stieler.geonotes;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import de.hauke_stieler.geonotes.notes.Note;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
