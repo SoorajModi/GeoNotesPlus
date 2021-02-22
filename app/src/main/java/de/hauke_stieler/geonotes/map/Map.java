@@ -5,12 +5,14 @@ import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.provider.MediaStore;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
@@ -182,6 +184,7 @@ public class Map {
                 // Task came from database and should therefore be removed.
                 if (marker.getId() != null) {
                     noteStore.removeNote(Long.parseLong(marker.getId()));
+                    // TODO: Remove media file from storage?
                 }
                 map.getOverlays().remove(marker);
             }
@@ -193,8 +196,11 @@ public class Map {
                 if (marker.getId() != null) {
                     noteStore.updateDescription(Long.parseLong(marker.getId()), marker.getSnippet());
                 } else {
-                    long id = noteStore.addNote(marker.getSnippet(), marker.getPosition().getLatitude(), marker.getPosition().getLongitude());
+                    // MediaType and URI will be null until image/audio notes are fully implemented
+                    Note newNote = new Note(0, marker.getSnippet(), marker.getPosition().getLatitude(), marker.getPosition().getLongitude(), Note.MediaType.NULL, Uri.parse(""));
+                    long id = noteStore.addNote(newNote);
                     marker.setId("" + id);
+                    // TODO: Saving the audio or image file using MediaStore API
                 }
 
                 setNormalIcon(marker);
