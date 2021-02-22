@@ -1,4 +1,4 @@
-package de.hauke_stieler.geonotes;
+package de.hauke_stieler.geonotes.password;
 
 import de.hauke_stieler.geonotes.password.SaltedHashPassword;
 
@@ -10,11 +10,7 @@ import de.hauke_stieler.geonotes.password.SaltedHashPassword;
 public class TestSaltedHashPassword {
     public static void main(String[] args) {
         SaltedHashPassword s = new SaltedHashPassword();
-
         String password = "admin123";
-        String salt = s.getSalt();
-        System.out.println("password: " + password);
-        System.out.println("salt: " + salt);
-        System.out.println("salted password: " + s.getSaltedPassword(password, salt));
+        System.out.println(s.getSaltedHashPassword(password));
     }
 }

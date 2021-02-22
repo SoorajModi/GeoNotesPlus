@@ -1,9 +1,7 @@
 package de.hauke_stieler.geonotes.password;
 
+import java.util.Random;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
 
 /**
  * A utility class for salted hash password
@@ -11,82 +9,78 @@ import java.security.SecureRandom;
  * @date - Feb.11, 2021
  */
 public class SaltedHashPassword {
-    // algorithm used: SHA-256
-    private final String ALGORITHM_NAME = "SHA-256";
+    // hex digits
+    private char[] hex = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+    private String ENCRYPTION = "MD5";		// MD5 used for salted
 
     /**
-     * convert byte array to hex string
+     * Generate a salted hash password
+     * MD5 algorithm is used to encrypt
+     * @param password - origin password
+     * @return - salted hash password
+     */
+    public String getSaltedHashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance(ENCRYPTION);
+            String salt = generateSalt();
+            // concatenate password with salt
+            String saltedPassword = password + salt;
+            // get the hash value for salted password
+            String hash = byteToHex(md.digest(saltedPassword.getBytes()));
+
+            // insert salt into hash value, used for authentication when login
+            char[] saltedHash = new char[48];
+            // insert a salt digit between every two hash digits
+            for(int i = 0; i < 48; i += 3) {
+                saltedHash[i] = hash.charAt(i/3*2);
+                saltedHash[i+1] = salt.charAt(i/3);
+                saltedHash[i+2] = hash.charAt(i/3*2+1);
+            }
+            return new String(saltedHash);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return e.toString();
+        }
+    }
+
+    /**
+     * Generate a 16-digit random hex string as salt
+     * @return - salt
+     */
+    public String generateSalt() {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(16);
+        for(int i = 0; i < sb.capacity(); i++) {
+            sb.append(hex[random.nextInt(16)]);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Convert a byte array into a hex string
      * @param bytes - byte array
      * @return - hex string
      */
-    private String byteToHex(byte[] bytes) {
-        String hex = "";
+    public String byteToHex(byte[] bytes) {
+        StringBuffer sb = new StringBuffer();
         for(int i = 0; i < bytes.length; i++) {
-            String temp = Integer.toHexString(bytes[i] & 0xff);
-            if(temp.length() == 1) {
-                hex += "0";
-            }
-            hex += temp;
+            sb.append(hex[bytes[i] >>> 3 & 0xf]);
+            sb.append(hex[bytes[i] & 0xf]);
         }
-        return hex;
+        return sb.toString();
     }
 
     /**
-     * convert a hex string to byte array
-     * @param hex - hex string
-     * @return - byte array
+     * Get salt from stored hash value
+     * @param hash - stored hash value
+     * @return - salt
      */
-    private byte[] hexToByte(String hex) {
-        byte[] bytes = new byte[hex.length() / 2];
-        for(int i = 0; i < bytes.length; i++) {
-            bytes[i] = (byte)Integer.parseInt(hex.substring(2*i, 2*i+2), 16);
+    public String getSaltFromHash(String hash) {
+        StringBuilder sb = new StringBuilder();
+        char[] h = hash.toCharArray();
+        for(int i = 0; i < hash.length(); i += 3) {
+            sb.append(h[i+1]);
         }
-        return bytes;
-    }
-
-    /**
-     * get salted in hex form
-     * @return - a hex string represents the salt
-     * @throws NoSuchProviderException
-     * @throws NoSuchAlgorithmException
-     */
-    public String getSalt() {
-        SecureRandom sr = null;
-        try {
-            sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
-        } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
-            e.printStackTrace();
-        }
-        byte[] salt = new byte[16];
-        sr.nextBytes(salt);
-        return byteToHex(salt);
-    }
-
-    /**
-     * generate a secure salted hash password
-     * @param password - password to be salted
-     * @param salt - salt to be used
-     * @return - salted hash password
-     * @throws NoSuchAlgorithmException
-     */
-    public String getSaltedPassword(String password, String salt) {
-        String saltedPassword = "";
-        byte[] s = hexToByte(salt);
-
-        MessageDigest md = null;
-        try {
-            md = MessageDigest.getInstance(ALGORITHM_NAME);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        // add salt to digest
-        md.update(s);
-        // get password in byte form
-        byte[] bytes = md.digest(password.getBytes());
-
-        for(int i = 0; i < bytes.length; i++) {
-            saltedPassword += Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1);
-        }
-        return saltedPassword;
+        return sb.toString();
     }
 }
