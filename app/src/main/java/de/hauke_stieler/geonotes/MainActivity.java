@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.ActionMenuItemView;
@@ -23,7 +22,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
-
+import de.hauke_stieler.geonotes.map.Map;
+import de.hauke_stieler.geonotes.map.TouchDownListener;
+import de.hauke_stieler.geonotes.settings.SettingsActivity;
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.events.DelayedMapListener;
 import org.osmdroid.events.MapListener;
@@ -32,10 +33,6 @@ import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.views.MapView;
 
 import java.util.ArrayList;
-
-import de.hauke_stieler.geonotes.map.Map;
-import de.hauke_stieler.geonotes.map.TouchDownListener;
-import de.hauke_stieler.geonotes.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -127,9 +124,9 @@ public class MainActivity extends AppCompatActivity {
                 boolean followingLocationEnabled = !map.isFollowLocationEnabled();
                 this.map.setLocationFollowMode(followingLocationEnabled);
 
-                if(followingLocationEnabled){
+                if (followingLocationEnabled) {
                     item.setIcon(R.drawable.ic_my_location);
-                }else{
+                } else {
                     item.setIcon(R.drawable.ic_location_searching);
                 }
                 return true;
