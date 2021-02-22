@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         preferences.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> preferenceChanged(sharedPreferences, key));
 
         loadPreferences();
-
     }
 
     private void createMap(Context context) {
