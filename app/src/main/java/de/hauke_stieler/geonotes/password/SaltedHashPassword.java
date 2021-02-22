@@ -14,15 +14,29 @@ public class SaltedHashPassword {
     private String ENCRYPTION = "MD5";		// MD5 used for salted
 
     /**
+     * Generate a 16-digit random hex string as salt
+     * @return - salt
+     */
+    public String generateSalt() {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(16);
+        for(int i = 0; i < sb.capacity(); i++) {
+            sb.append(hex[random.nextInt(16)]);
+        }
+        return sb.toString();
+    }
+
+    /**
      * Generate a salted hash password
      * MD5 algorithm is used to encrypt
      * @param password - origin password
+     * @param salt - salt used for encryption
      * @return - salted hash password
      */
-    public String getSaltedHashPassword(String password) {
+    public String getSaltedHashPassword(String password, String salt) {
         try {
             MessageDigest md = MessageDigest.getInstance(ENCRYPTION);
-            String salt = generateSalt();
+            // String salt = generateSalt();
             // concatenate password with salt
             String saltedPassword = password + salt;
             // get the hash value for salted password
@@ -41,19 +55,6 @@ public class SaltedHashPassword {
             e.printStackTrace();
             return e.toString();
         }
-    }
-
-    /**
-     * Generate a 16-digit random hex string as salt
-     * @return - salt
-     */
-    public String generateSalt() {
-        Random random = new Random();
-        StringBuilder sb = new StringBuilder(16);
-        for(int i = 0; i < sb.capacity(); i++) {
-            sb.append(hex[random.nextInt(16)]);
-        }
-        return sb.toString();
     }
 
     /**
