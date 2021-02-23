@@ -7,13 +7,13 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:theme="@style/ToolbarTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary"
-        android:elevation="5dp" />
+        android:elevation="5dp"
+        android:theme="@style/ToolbarTheme" />
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical">
@@ -21,7 +21,8 @@
         <org.osmdroid.views.MapView
             android:id="@+id/map"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+            android:layout_height="fill_parent"
+            android:background="#FFFFFF" />
 
         <TextView
             android:id="@+id/copyright"
