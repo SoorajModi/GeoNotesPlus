@@ -36,6 +36,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         float prefMapScaling = preferences.getFloat(getString(R.string.pref_map_scaling), 1.0f);
         ((EditText) findViewById(R.id.settings_scale_input)).setText("" + prefMapScaling);
+
+        boolean prefDarkMode = preferences.getBoolean(getString(R.string.pref_dark_mode), false);
+        ((Switch) findViewById(R.id.settings_dark_mode)).setChecked(prefDarkMode);
     }
 
     private void save() {
@@ -56,6 +59,9 @@ public class SettingsActivity extends AppCompatActivity {
         }
         editor.putFloat(getString(R.string.pref_map_scaling), mapScale);
         editor.commit();
+
+        boolean is_dark_mode = ((Switch) findViewById(R.id.settings_dark_mode)).isChecked();
+        editor.putBoolean(getString(R.string.pref_dark_mode), is_dark_mode);
     }
 
     @Override
