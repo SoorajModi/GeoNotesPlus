@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "94365928007",
+    "project_id": "auth-f234d",
+    "storage_bucket": "auth-f234d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:94365928007:android:d92df26ed064053417ff62",
+        "android_client_info": {
+          "package_name": "de.hauke_stieler.geonotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "94365928007-186j49jceo8v2obdta1bnnsk7p4n98kn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCydq4HUAB2c3IF5pfuEUNnjy8EHeZHSt8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "94365928007-186j49jceo8v2obdta1bnnsk7p4n98kn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
