@@ -7,10 +7,4 @@
         app:showAsAction="ifRoom"
         android:title="Settings">
     </item>
-    <item
-        android:id="@+id/toolbar_btn_settings"
-        android:icon="@drawable/ic_settings"
-        app:showAsAction="ifRoom"
-        android:title="Settings">
-    </item>
 </menu>
