@@ -27,6 +27,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.navigation.NavigationView;
+
 import de.hauke_stieler.geonotes.map.Map;
 import de.hauke_stieler.geonotes.map.TouchDownListener;
 import de.hauke_stieler.geonotes.settings.SettingsActivity;
@@ -45,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Map map;
     private SharedPreferences preferences;
+    private ActionBarDrawerToggle t;
+    private DrawerLayout dl;
+    private NavigationView nv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +59,34 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawerLayout = findViewById(R.id. drawerLayout);
-        ActionBarDrawerToggle t = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.Open, R.string.Close);
-        drawerLayout.addDrawerListener(t);
+        dl = (DrawerLayout) findViewById(R.id. drawerLayout);
+        t = new ActionBarDrawerToggle(this, dl, toolbar, R.string.Open, R.string.Close);
+        dl.addDrawerListener(t);
         t.syncState();
+
+        nv = (NavigationView)findViewById(R.id.navigationView);
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch(item.getItemId()) {
+                    case R.id.list_all_notes:
+                        System.out.println("GN: Listing all notes");
+                        intent = new Intent(MainActivity.this, ListNotesActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.settings:
+                        System.out.println("GN: Going to settings menu");
+                        intent = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
+
 
 
         // Set HTML text of copyright label
@@ -130,12 +158,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            /*
-            case R.id.toolbar_btn_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
-             */
             case R.id.toolbar_btn_gps_follow:
                 boolean followingLocationEnabled = !map.isFollowLocationEnabled();
                 this.map.setLocationFollowMode(followingLocationEnabled);
@@ -145,6 +167,15 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     item.setIcon(R.drawable.ic_location_searching);
                 }
+                return true;
+            case R.id.list_all_notes:
+                // Stuff
+                System.out.println("listing all notes");
+                return true;
+            case R.id.settings:
+                System.out.println("going to settings menu");
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

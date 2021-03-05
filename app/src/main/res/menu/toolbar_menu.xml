@@ -5,6 +5,6 @@
         android:id="@+id/toolbar_btn_gps_follow"
         android:icon="@drawable/ic_location_searching"
         app:showAsAction="ifRoom"
-        android:title="Settings">
+        android:title="@string/locate">
     </item>
 </menu>
