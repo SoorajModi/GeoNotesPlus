@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.main_toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         createHamburgerMenu(toolbar);
 
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             map.setMapScaleFactor(mapScale);
         } else if (getString(R.string.pref_dark_mode).equals(key)) {
             boolean is_dark_mode = pref.getBoolean(key, false);
-            Toolbar toolbar = findViewById(R.id.main_toolbar);
+            Toolbar toolbar = findViewById(R.id.toolbar);
             LinearLayout ll = findViewById(R.id.main_page);
             if(is_dark_mode) {
                 toolbar.setBackgroundColor(getResources().getColor(R.color.light_grey));
