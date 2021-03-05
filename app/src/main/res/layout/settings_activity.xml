@@ -1,10 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/settings_page">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/settings_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary"
@@ -25,6 +26,7 @@
             android:minHeight="50dp">
 
             <TextView
+                android:id="@+id/zoon_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Show zoom-buttons"
@@ -48,6 +50,7 @@
             android:minHeight="50dp">
 
             <TextView
+                android:id="@+id/scale_factor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Map scaling factor"
@@ -64,6 +67,30 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:digits="0123456789."/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:minHeight="50dp">
+
+            <TextView
+                android:id="@+id/dark_mode_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dark mode"
+                android:textSize="16dp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Switch
+                android:id="@+id/settings_dark_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

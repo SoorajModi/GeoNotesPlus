@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.provider.MediaStore;
+import android.widget.Switch;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
