@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.text.Html;
@@ -14,9 +16,14 @@ import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.ActionMenuItemView;
@@ -50,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private Map map;
     private SharedPreferences preferences;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         addMapListener();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadPreferences() {
         for (String key : preferences.getAll().keySet()) {
             preferenceChanged(preferences, key);
@@ -108,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         map.setLocation(lat, lon, zoom);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void preferenceChanged(SharedPreferences pref, String key) {
         if (getString(R.string.pref_zoom_buttons).equals(key)) {
             boolean showZoomButtons = pref.getBoolean(key, true);
@@ -115,6 +125,19 @@ public class MainActivity extends AppCompatActivity {
         } else if (getString(R.string.pref_map_scaling).equals(key)) {
             float mapScale = pref.getFloat(key, 1.0f);
             map.setMapScaleFactor(mapScale);
+        } else if (getString(R.string.pref_dark_mode).equals(key)) {
+            boolean is_dark_mode = pref.getBoolean(key, false);
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            LinearLayout ll = findViewById(R.id.main_page);
+            if(is_dark_mode) {
+                toolbar.setBackgroundColor(getResources().getColor(R.color.light_grey));
+                getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+                ll.setBackgroundColor(getResources().getColor(R.color.dark_grey));
+            } else {
+                toolbar.setBackgroundColor(getResources().getColor(R.color.primary_dark));
+                getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+                ll.setBackgroundColor(Color.WHITE);
+            }
         }
     }
 
@@ -183,8 +206,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onResume() {
+        loadPreferences();
         super.onResume();
         map.onResume();
     }
