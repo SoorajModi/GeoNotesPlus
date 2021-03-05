@@ -75,27 +75,8 @@ public class MainActivity extends AppCompatActivity {
         preferences = getSharedPreferences(getString(R.string.pref_file), MODE_PRIVATE);
         preferences.registerOnSharedPreferenceChangeListener(this::preferenceChanged);
 
-//        setDarkMode();
-
         loadPreferences();
     }
-
-//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-//    private void setDarkMode() {
-//        Intent intent = getIntent();
-//        String value = intent.getStringExtra("Dark Mode");
-//        Toolbar toolbar = findViewById(R.id.main_toolbar);
-//        LinearLayout ll = findViewById(R.id.main_page);
-//        if(value.equals("true")) {
-//            toolbar.setBackgroundColor(Color.rgb(61, 56, 56));
-//            getWindow().setStatusBarColor(Color.rgb(20, 20, 20));
-//            ll.setBackgroundColor(Color.rgb(46, 46, 46));
-//        } else {
-//            toolbar.setBackgroundColor(Color.rgb(57, 142, 62));
-//            getWindow().setStatusBarColor(Color.rgb(57, 142, 62));
-//            ll.setBackgroundColor(Color.WHITE);
-//        }
-//    }
 
     private void createMap(Context context) {
         // Keep device on
@@ -139,12 +120,12 @@ public class MainActivity extends AppCompatActivity {
             Toolbar toolbar = findViewById(R.id.main_toolbar);
             LinearLayout ll = findViewById(R.id.main_page);
             if(is_dark_mode) {
-                toolbar.setBackgroundColor(Color.rgb(61, 56, 56));
-                getWindow().setStatusBarColor(Color.rgb(20, 20, 20));
-                ll.setBackgroundColor(Color.rgb(46, 46, 46));
+                toolbar.setBackgroundColor(getResources().getColor(R.color.light_grey));
+                getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+                ll.setBackgroundColor(getResources().getColor(R.color.dark_grey));
             } else {
-                toolbar.setBackgroundColor(Color.rgb(57, 142, 62));
-                getWindow().setStatusBarColor(Color.rgb(57, 142, 62));
+                toolbar.setBackgroundColor(getResources().getColor(R.color.primary_dark));
+                getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
                 ll.setBackgroundColor(Color.WHITE);
             }
         }

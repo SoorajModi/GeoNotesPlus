@@ -36,10 +36,9 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        setDarkMode();
-
         preferences = getSharedPreferences(getString(R.string.pref_file), MODE_PRIVATE);
 
+        setDarkMode();
         load();
     }
 
@@ -53,26 +52,26 @@ public class SettingsActivity extends AppCompatActivity {
                 LinearLayout ll = findViewById(R.id.settings_page);
                 TextView zoom_button = findViewById(R.id.zoon_button);
                 TextView scale_factor = findViewById(R.id.scale_factor);
-                TextView dark_mode_buton = findViewById(R.id.dark_mode_button);
+                TextView dark_mode_button = findViewById(R.id.dark_mode_button);
                 EditText input = findViewById(R.id.settings_scale_input);
                 Intent intent = new Intent();
 
                 if(isChecked) {
-                    toolbar.setBackgroundColor(Color.rgb(61, 56, 56));
-                    getWindow().setStatusBarColor(Color.rgb(20, 20, 20));
-                    ll.setBackgroundColor(Color.rgb(46, 46, 46));
+                    toolbar.setBackgroundColor(getResources().getColor(R.color.light_grey));
+                    getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+                    ll.setBackgroundColor(getResources().getColor(R.color.dark_grey));
                     zoom_button.setTextColor(Color.WHITE);
                     scale_factor.setTextColor(Color.WHITE);
-                    dark_mode_buton.setTextColor(Color.WHITE);
+                    dark_mode_button.setTextColor(Color.WHITE);
                     input.setTextColor(Color.WHITE);
                     intent.putExtra("Dark Mode", "true");
                 } else {
-                    toolbar.setBackgroundColor(Color.rgb(57, 142, 62));
-                    getWindow().setStatusBarColor(Color.rgb(57, 142, 62));
+                    toolbar.setBackgroundColor(getResources().getColor(R.color.primary_dark));
+                    getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
                     ll.setBackgroundColor(Color.WHITE);
                     zoom_button.setTextColor(Color.BLACK);
                     scale_factor.setTextColor(Color.BLACK);
-                    dark_mode_buton.setTextColor(Color.BLACK);
+                    dark_mode_button.setTextColor(Color.BLACK);
                     input.setTextColor(Color.BLACK);
                     intent.putExtra("Dark Mode", "false");
                 }
