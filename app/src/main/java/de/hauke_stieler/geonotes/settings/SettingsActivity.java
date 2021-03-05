@@ -13,11 +13,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import de.hauke_stieler.geonotes.Login;
 import de.hauke_stieler.geonotes.MainActivity;
 import de.hauke_stieler.geonotes.R;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,14 +29,14 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
-import android.util.Log;
 
+import android.util.Log;
 
 
 public class SettingsActivity extends AppCompatActivity {
 
     SharedPreferences preferences;
-    Button CP;
+    Button ChangePassword;
     FirebaseAuth Auth1;
     Button LogOut;
 
@@ -54,14 +56,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         load();
 
-        CP = findViewById(R.id.ChangePass);
+        ChangePassword = findViewById(R.id.ChangePass);
         LogOut = findViewById(R.id.logOut);
         Auth1 = FirebaseAuth.getInstance();
         FirebaseUser user1 = Auth1.getCurrentUser();
 
 
-
-        CP.setOnClickListener(new View.OnClickListener() {
+        ChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final EditText text = new EditText(v.getContext());
@@ -73,7 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String upadtedPass = text.getText().toString(); // get the new password
-                              user1.updatePassword(upadtedPass).addOnCompleteListener(new OnCompleteListener<Void>() {  // use the updatepaswword method from firebase
+                        user1.updatePassword(upadtedPass).addOnCompleteListener(new OnCompleteListener<Void>() {  // use the updatepaswword method from firebase
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {  //if the task is succefull
@@ -102,11 +103,9 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Auth1.signOut();
                 Toast.makeText(SettingsActivity.this, "You have logged out successfully!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(),Login.class));
+                startActivity(new Intent(getApplicationContext(), Login.class));
             }
         });
-
-
 
 
     }
@@ -145,11 +144,6 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
         return true;
     }
-
-
-
-
-
 
 
 }
