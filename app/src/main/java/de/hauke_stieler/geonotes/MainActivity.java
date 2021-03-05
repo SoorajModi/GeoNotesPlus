@@ -17,12 +17,18 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
+import com.google.android.material.navigation.NavigationView;
 
 import de.hauke_stieler.geonotes.map.Map;
 import de.hauke_stieler.geonotes.map.TouchDownListener;
@@ -51,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        createHamburgerMenu(toolbar);
 
         // Set HTML text of copyright label
         ((TextView) findViewById(R.id.copyright)).setMovementMethod(LinkMovementMethod.getInstance());
@@ -111,6 +118,37 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void createHamburgerMenu(Toolbar toolbar) {
+        DrawerLayout dl = (DrawerLayout) findViewById(R.id.drawerLayout);
+        ActionBarDrawerToggle t = new ActionBarDrawerToggle(this, dl, toolbar, R.string.Open, R.string.Close);
+        dl.addDrawerListener(t);
+        t.syncState();
+
+        NavigationView nv = (NavigationView) findViewById(R.id.navigationView);
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch(item.getItemId()) {
+                    case R.id.list_all_notes:
+                        System.out.println("GN: Listing all notes");
+                        intent = new Intent(MainActivity.this, ListNotesActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.settings:
+                        System.out.println("GN: Going to settings menu");
+                        intent = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
@@ -121,10 +159,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.toolbar_btn_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
             case R.id.toolbar_btn_gps_follow:
                 boolean followingLocationEnabled = !map.isFollowLocationEnabled();
                 this.map.setLocationFollowMode(followingLocationEnabled);
@@ -134,6 +168,15 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     item.setIcon(R.drawable.ic_location_searching);
                 }
+                return true;
+            case R.id.list_all_notes:
+                // Stuff
+                System.out.println("listing all notes");
+                return true;
+            case R.id.settings:
+                System.out.println("going to settings menu");
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
