@@ -1,6 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -15,6 +17,7 @@
         android:id="@+id/settings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FFFFFF"
         android:orientation="vertical"
         android:padding="20dp">
 
@@ -62,8 +65,33 @@
                 android:id="@+id/settings_scale_input"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:digits="0123456789."/>
+                android:digits="0123456789."
+                android:inputType="number" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/ChangePass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="300dp"
+            android:background="#7C807A"
+            android:hint="Change Password"
+            android:textColor="#471111"
+            android:textColorHighlight="#459331"
+            android:textColorHint="#FAFBFF"
+            android:textColorLink="#5C0707" />
+
+        <Button
+            android:id="@+id/logOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="#7C807A"
+            android:hint="Log out"
+            android:textColor="#471111"
+            android:textColorHighlight="#459331"
+            android:textColorHint="#FAFBFF"
+            android:textColorLink="#5C0707" />
+
     </LinearLayout>
 </LinearLayout>

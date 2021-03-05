@@ -17,6 +17,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 // CODE iS INFULUNCED BY A YOUTUBE SOURCE : https://www.youtube.com/watch?v=TwHmrZxiPA8&ab_channel=SmallAcademy
+
+/**
+ Author: Mustafa Al-Obaidi
+ */
 public class Register extends AppCompatActivity {
     EditText FullName1,Email1,Password1;
     Button RegsiterBtn1;

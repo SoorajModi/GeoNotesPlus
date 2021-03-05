@@ -18,6 +18,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 // CODE iS INFULUNCED BY A YOUTUBE SOURCE : https://www.youtube.com/watch?v=TwHmrZxiPA8&ab_channel=SmallAcademy
 
+/**
+Author: Mustafa Al-Obaidi
+ */
 
 public class Login extends AppCompatActivity {
 
@@ -71,7 +74,6 @@ public class Login extends AppCompatActivity {
                 });
             }
         });
-
 
         CreateBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
