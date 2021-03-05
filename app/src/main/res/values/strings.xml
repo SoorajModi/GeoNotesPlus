@@ -30,4 +30,9 @@
     <string name="note">Note</string>
     <string name="location">Location</string>
     <string name="list_notes">List Notes</string>
+    <string name="show_zoom_buttons">Show zoom buttons</string>
+    <string name="map_scaling_factor">Map scaling factor</string>
+    <string name="change_password">Change Password</string>
+    <string name="log_out">Log out</string>
+    <string name="dark_mode">Dark mode</string>
 </resources>
