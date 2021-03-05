@@ -54,7 +54,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+<<<<<<< HEAD
         Toolbar toolbar = findViewById(R.id.main_toolbar);
+=======
+        Toolbar toolbar = findViewById(R.id.toolbar);
+>>>>>>> master
         setSupportActionBar(toolbar);
 
         // Set HTML text of copyright label
