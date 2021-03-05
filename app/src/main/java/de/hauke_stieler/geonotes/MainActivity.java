@@ -16,12 +16,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import de.hauke_stieler.geonotes.map.Map;
 import de.hauke_stieler.geonotes.map.TouchDownListener;
 import de.hauke_stieler.geonotes.settings.SettingsActivity;
@@ -48,6 +53,13 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        DrawerLayout drawerLayout = findViewById(R.id. drawerLayout);
+        ActionBarDrawerToggle t = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.Open, R.string.Close);
+        drawerLayout.addDrawerListener(t);
+        t.syncState();
+
 
         // Set HTML text of copyright label
         ((TextView) findViewById(R.id.copyright)).setMovementMethod(LinkMovementMethod.getInstance());

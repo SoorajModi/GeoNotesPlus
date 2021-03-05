@@ -19,4 +19,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="Open">open</string>
+    <string name="Close">close</string>
+    <string name="map_contributor">© OpenStreetMap contributors ODbL</string>
 </resources>
