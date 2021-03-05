@@ -19,4 +19,14 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="Open">open</string>
+    <string name="Close">close</string>
+    <string name="all_notes">All notes</string>
+    <string name="settings">Settings</string>
+    <string name="map_contributor">© OpenStreetMap contributors ODbL</string>
+    <string name="locate">Locate</string>
+    <string name="icon">Icon</string>
+    <string name="note">Note</string>
+    <string name="location">Location</string>
+    <string name="list_notes">List Notes</string>
 </resources>
