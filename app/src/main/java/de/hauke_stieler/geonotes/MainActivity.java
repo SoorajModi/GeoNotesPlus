@@ -47,9 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Map map;
     private SharedPreferences preferences;
-    private ActionBarDrawerToggle t;
-    private DrawerLayout dl;
-    private NavigationView nv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,36 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        dl = (DrawerLayout) findViewById(R.id. drawerLayout);
-        t = new ActionBarDrawerToggle(this, dl, toolbar, R.string.Open, R.string.Close);
-        dl.addDrawerListener(t);
-        t.syncState();
-
-        nv = (NavigationView)findViewById(R.id.navigationView);
-        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Intent intent;
-                switch(item.getItemId()) {
-                    case R.id.list_all_notes:
-                        System.out.println("GN: Listing all notes");
-                        intent = new Intent(MainActivity.this, ListNotesActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.settings:
-                        System.out.println("GN: Going to settings menu");
-                        intent = new Intent(MainActivity.this, SettingsActivity.class);
-                        startActivity(intent);
-                        break;
-                    default:
-                        break;
-                }
-                return true;
-            }
-        });
-
-
+        createHamburgerMenu(toolbar);
 
         // Set HTML text of copyright label
         ((TextView) findViewById(R.id.copyright)).setMovementMethod(LinkMovementMethod.getInstance());
@@ -146,6 +114,37 @@ public class MainActivity extends AppCompatActivity {
             float mapScale = pref.getFloat(key, 1.0f);
             map.setMapScaleFactor(mapScale);
         }
+    }
+
+    private void createHamburgerMenu(Toolbar toolbar) {
+        DrawerLayout dl = (DrawerLayout) findViewById(R.id.drawerLayout);
+        ActionBarDrawerToggle t = new ActionBarDrawerToggle(this, dl, toolbar, R.string.Open, R.string.Close);
+        dl.addDrawerListener(t);
+        t.syncState();
+
+        NavigationView nv = (NavigationView) findViewById(R.id.navigationView);
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch(item.getItemId()) {
+                    case R.id.list_all_notes:
+                        System.out.println("GN: Listing all notes");
+                        intent = new Intent(MainActivity.this, ListNotesActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.settings:
+                        System.out.println("GN: Going to settings menu");
+                        intent = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     @Override
