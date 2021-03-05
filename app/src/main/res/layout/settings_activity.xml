@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
     android:id="@+id/settings_page">
 
     <androidx.appcompat.widget.Toolbar
@@ -13,12 +14,10 @@
         android:theme="@style/ToolbarTheme" />
 
     <LinearLayout
-        android:id="@+id/settings"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,11 +29,11 @@
                 android:id="@+id/zoon_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Show zoom-buttons"
-                android:textSize="16dp" />
+                android:text="@string/show_zoom_buttons"
+                android:textSize="16sp" />
 
             <Space
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
@@ -54,11 +53,11 @@
                 android:id="@+id/scale_factor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Map scaling factor"
+                android:text="@string/map_scaling_factor"
                 android:textSize="16dp" />
 
             <Space
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
@@ -70,13 +69,37 @@
                 android:inputType="number" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:minHeight="50dp">
+
+            <TextView
+                android:id="@+id/dark_mode_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dark_mode"
+                android:textSize="16dp" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Switch
+                android:id="@+id/settings_dark_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/ChangePass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="300dp"
             android:background="#7C807A"
-            android:hint="Change Password"
+            android:hint="@string/change_password"
             android:textColor="#471111"
             android:textColorHighlight="#459331"
             android:textColorHint="#FAFBFF"
@@ -88,34 +111,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:background="#7C807A"
-            android:hint="Log out"
+            android:hint="@string/log_out"
             android:textColor="#471111"
             android:textColorHighlight="#459331"
             android:textColorHint="#FAFBFF"
             android:textColorLink="#5C0707" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:minHeight="50dp">
-
-            <TextView
-                android:id="@+id/dark_mode_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dark mode"
-                android:textSize="16dp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Switch
-                android:id="@+id/settings_dark_mode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
