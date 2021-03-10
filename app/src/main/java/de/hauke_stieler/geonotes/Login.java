@@ -1,8 +1,10 @@
 package de.hauke_stieler.geonotes;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,6 +19,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import de.hauke_stieler.geonotes.settings.SettingsActivity;
 // CODE iS INFULUNCED BY A YOUTUBE SOURCE : https://www.youtube.com/watch?v=TwHmrZxiPA8&ab_channel=SmallAcademy
 
 /**
@@ -29,6 +34,7 @@ public class Login extends AppCompatActivity {
     Button LoginBtn1;
     TextView CreateBtn1;
     FirebaseAuth Auth1;
+    TextView forgotPassword;
 
 
     @Override
@@ -39,8 +45,11 @@ public class Login extends AppCompatActivity {
         Email1 = findViewById(R.id.Email);
         Password1 = findViewById(R.id.password);
         Auth1 = FirebaseAuth.getInstance();
+        FirebaseUser user1 = Auth1.getCurrentUser();
         LoginBtn1 = findViewById(R.id.LoginBtn);
         CreateBtn1 = findViewById(R.id.textView3);
+        forgotPassword = findViewById(R.id.forgotPassword);
+
 
 
         LoginBtn1.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +86,41 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Register.class));
+            }
+        });
+
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final EditText text = new EditText(v.getContext());
+                AlertDialog.Builder resetPass= new AlertDialog.Builder(v.getContext()); // construct an aler dialog to ask for the user's new password.
+                resetPass.setTitle("Reset Password");
+                resetPass.setMessage("Please Enter Your Email To Receive The Reset Link.");
+                resetPass.setView(text);
+                resetPass.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String email = text.getText().toString(); // get the email
+                       Auth1.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {  // use the updatepaswword method from firebase
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {  //if the task is succefull
+                                    Toast.makeText(Login.this, "A password reset link has been sent to your email", Toast.LENGTH_SHORT).show();
+                                } else if (!task.isSuccessful()) {  // if the task fails
+                                    Toast.makeText(Login.this, "Something went wrong :(, failed to send the link", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                });
+                resetPass.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                    }
+                });
+                resetPass.show();
             }
         });
 
