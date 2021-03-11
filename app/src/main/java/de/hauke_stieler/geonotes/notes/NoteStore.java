@@ -108,12 +108,17 @@ public class NoteStore extends SQLiteOpenHelper {
         db.delete(NOTES_TABLE_NAME, NOTES_COL_ID + " = ?", new String[]{"" + id});
     }
 
-    public List<Note> getAllNotes() {
+    public List<Note> getAllNotes(boolean is_desc_order) {
         SQLiteDatabase db = this.getReadableDatabase();
-
+        String order = "";
+        if(is_desc_order) {
+            order = "datetime(date) desc";
+        } else {
+            order = "datetime(date) asc";
+        }
         Cursor cursor = db.query(NOTES_TABLE_NAME,
                 new String[]{NOTES_COL_ID, NOTES_COL_DESCRIPTION, NOTES_COL_LAT, NOTES_COL_LON, NOTES_COL_MEDIATYPE, NOTES_COL_MEDIAURI, NOTES_COL_DATE},
-                null, null, null, null, null
+                null, null, null, null, order
         );
 
         List<Note> notes = new ArrayList<>();

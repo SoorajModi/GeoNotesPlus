@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.provider.MediaStore;
+import android.widget.Button;
 import android.widget.Switch;
 
 import org.osmdroid.api.IGeoPoint;
@@ -59,6 +60,7 @@ public class Map {
 
     private NoteStore noteStore;
 
+
     public Map(Context context, MapView map, PowerManager.WakeLock wakeLock, Drawable locationIcon, Drawable normalIcon, Drawable selectedIcon) {
         this.wakeLock = wakeLock;
         this.normalIcon = normalIcon;
@@ -81,7 +83,7 @@ public class Map {
         createMarkerWindow(map);
 
         noteStore = new NoteStore(context);
-        for (Note n : noteStore.getAllNotes()) {
+        for (Note n : noteStore.getAllNotes(false)) {
             Marker marker = createMarker(n.description, new GeoPoint(n.lat, n.lon), markerClickListener);
             marker.setId("" + n.id);
         }
