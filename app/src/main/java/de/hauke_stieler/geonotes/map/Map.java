@@ -34,6 +34,9 @@ import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import de.hauke_stieler.geonotes.R;
 import de.hauke_stieler.geonotes.notes.Note;
 import de.hauke_stieler.geonotes.notes.NoteStore;
@@ -198,7 +201,10 @@ public class Map {
                     noteStore.updateDescription(Long.parseLong(marker.getId()), marker.getSnippet());
                 } else {
                     // MediaType and URI will be null until image/audio notes are fully implemented
-                    Note newNote = new Note(0, marker.getSnippet(), marker.getPosition().getLatitude(), marker.getPosition().getLongitude(), Note.MediaType.NULL, Uri.parse(""));
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = new Date(System.currentTimeMillis());
+                    String date_str = formatter.format(date);
+                    Note newNote = new Note(0, marker.getSnippet(), marker.getPosition().getLatitude(), marker.getPosition().getLongitude(), Note.MediaType.NULL, Uri.parse(""), date_str);
                     long id = noteStore.addNote(newNote);
                     marker.setId("" + id);
                     // TODO: Saving the audio or image file using MediaStore API

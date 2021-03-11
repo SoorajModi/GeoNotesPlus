@@ -37,7 +37,8 @@ public class ListNotesActivity extends AppCompatActivity {
         noteStore = new NoteStore(context);
         List<Note> list = noteStore.getAllNotes();
         for (Note n : list) {
-            System.out.println("Lat: " + n.lat + "  Lon: " + n.lon + " Desc: " + n.description);
+            System.out.print("Lat: " + n.lat + "  Lon: " + n.lon + " Desc: " + n.description + "  ");
+//            System.out.println("Date: " + n.date);
         }
 
         // Display notes from database in app
