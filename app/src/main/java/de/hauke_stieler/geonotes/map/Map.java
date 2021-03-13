@@ -208,6 +208,11 @@ public class Map {
             }
 
             @Override
+            public void onShare(Marker marker) {
+                System.out.println("GEONOTES - Share button pressed!");
+            }
+
+            @Override
             public void onMove(Marker marker) {
                 markerToMove = marker;
             }
