@@ -2,6 +2,7 @@ package de.hauke_stieler.geonotes.map;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -204,6 +205,26 @@ public class Map {
                     // TODO: Saving the audio or image file using MediaStore API
                 }
 
+                setNormalIcon(marker);
+            }
+
+            @Override
+            public void onShare(Marker marker) {
+                // Create message to share
+                String message = "From Geonotes:\n";
+                message += marker.getSnippet();
+                message += "\nhttps://google.ca/maps/place/" + marker.getPosition().getLatitude() + "," + marker.getPosition().getLongitude();
+
+                // Create intent to send message
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+                sendIntent.setType("text/plain");
+
+                // Open sharing dialogue
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                map.getContext().startActivity(shareIntent);
                 setNormalIcon(marker);
             }
 
