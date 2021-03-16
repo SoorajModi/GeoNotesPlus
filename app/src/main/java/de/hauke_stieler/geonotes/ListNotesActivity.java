@@ -2,12 +2,16 @@ package de.hauke_stieler.geonotes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -21,6 +25,7 @@ import java.util.List;
 import de.hauke_stieler.geonotes.notes.Note;
 import de.hauke_stieler.geonotes.notes.NoteAdapter;
 import de.hauke_stieler.geonotes.notes.NoteStore;
+import de.hauke_stieler.geonotes.settings.SettingsActivity;
 
 public class ListNotesActivity extends AppCompatActivity {
     private NoteStore noteStore;
@@ -47,50 +52,38 @@ public class ListNotesActivity extends AppCompatActivity {
         List<Note> list = noteStore.getAllNotes(is_desc_order);
         for (Note n : list) {
             System.out.print("Lat: " + n.lat + "  Lon: " + n.lon + " Desc: " + n.description + "  ");
-//            System.out.println("Date: " + n.date);
+            System.out.println("Date: " + n.date);
         }
+
+        sortNotes(is_desc_order);
+    }
+
+    public void sortNotes(boolean is_desc_order) {
+        List<Note> list = noteStore.getAllNotes(is_desc_order);
 
         // Display notes from database in app
         arrayAdapter = new NoteAdapter(this, (ArrayList)list);
         ListView lv = (ListView)findViewById(R.id.note_list);
         lv.setAdapter(arrayAdapter);
+    }
 
-        btn_sort = (Button)findViewById(R.id.btn_sort);
-        btn_sort.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.all_note_menu, menu);
+        return true;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sort_notes:
                 is_desc_order = !is_desc_order;
-
-                if(is_desc_order) {
-                    Collections.sort(list, new Comparator<Note>() {
-                        @Override
-                        public int compare(Note o1, Note o2) {
-                            if(o1.date.compareTo(o2.date) == 0) {
-                                return 0;
-                            } else {
-                                return o1.date.compareTo(o2.date) > 0 ? 1 : -1;
-                            }
-                        }
-                    });
-                } else {
-                    Collections.sort(list, new Comparator<Note>() {
-                        @Override
-                        public int compare(Note o1, Note o2) {
-                            if(o1.date.compareTo(o2.date) == 0) {
-                                return 0;
-                            } else {
-                                return o1.date.compareTo(o2.date) < 0 ? 1 : -1;
-                            }
-                        }
-                    });
-                }
-
-                // Display notes from database in app
-                arrayAdapter = new NoteAdapter(ListNotesActivity.this, (ArrayList)list);
-                ListView lv = (ListView)findViewById(R.id.note_list);
-                lv.setAdapter(arrayAdapter);
-            }
-        });
+                sortNotes(is_desc_order);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

@@ -14,15 +14,6 @@
         android:elevation="5dp"
         android:theme="@style/ToolbarTheme" />
 
-    <Button
-        android:id="@+id/btn_sort"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#f0f0f0"
-        android:text="↑↓"
-        android:textColor="@color/black"
-        android:textSize="30dp" />
-
     <ListView
         android:id="@+id/note_list"
         android:layout_width="fill_parent"
