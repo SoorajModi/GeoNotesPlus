@@ -35,4 +35,6 @@
     <string name="change_password">Change Password</string>
     <string name="log_out">Log out</string>
     <string name="dark_mode">Dark mode</string>
+    <string name="date">Date</string>
+    <string name="sort">sort</string>
 </resources>

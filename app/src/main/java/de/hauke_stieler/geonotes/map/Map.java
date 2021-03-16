@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.provider.MediaStore;
+import android.widget.Button;
 import android.widget.Switch;
 
 import org.osmdroid.api.IGeoPoint;
@@ -34,6 +35,9 @@ import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import de.hauke_stieler.geonotes.R;
 import de.hauke_stieler.geonotes.notes.Note;
@@ -57,6 +61,7 @@ public class Map {
 
     private NoteStore noteStore;
 
+
     public Map(Context context, MapView map, PowerManager.WakeLock wakeLock, Drawable locationIcon, Drawable normalIcon, Drawable selectedIcon) {
         this.wakeLock = wakeLock;
         this.normalIcon = normalIcon;
@@ -79,7 +84,7 @@ public class Map {
         createMarkerWindow(map);
 
         noteStore = new NoteStore(context);
-        for (Note n : noteStore.getAllNotes()) {
+        for (Note n : noteStore.getAllNotes(false)) {
             Marker marker = createMarker(n.description, new GeoPoint(n.lat, n.lon), markerClickListener);
             marker.setId("" + n.id);
         }
@@ -199,7 +204,10 @@ public class Map {
                     noteStore.updateDescription(Long.parseLong(marker.getId()), marker.getSnippet());
                 } else {
                     // MediaType and URI will be null until image/audio notes are fully implemented
-                    Note newNote = new Note(0, marker.getSnippet(), marker.getPosition().getLatitude(), marker.getPosition().getLongitude(), Note.MediaType.NULL, Uri.parse(""));
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = new Date(System.currentTimeMillis());
+                    String date_str = formatter.format(date);
+                    Note newNote = new Note(0, marker.getSnippet(), marker.getPosition().getLatitude(), marker.getPosition().getLongitude(), Note.MediaType.NULL, Uri.parse(""), date_str);
                     long id = noteStore.addNote(newNote);
                     marker.setId("" + id);
                     // TODO: Saving the audio or image file using MediaStore API
