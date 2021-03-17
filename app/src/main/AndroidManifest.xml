@@ -15,8 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.GeoNotes">
-        <activity android:name=".Login"></activity>
-        <activity android:name=".Register">
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".RegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,13 +24,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".settings.SettingsActivity"
+            android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity android:name=".MainActivity">
         </activity>
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".firebase.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

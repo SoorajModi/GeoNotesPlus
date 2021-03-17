@@ -16,37 +16,33 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+// CODE IS INFLUENCED BY A YOUTUBE SOURCE : https://www.youtube.com/watch?v=TwHmrZxiPA8&ab_channel=SmallAcademy
 
-// CODE iS INFLUENCED BY A YOUTUBE SOURCE : https://www.youtube.com/watch?v=TwHmrZxiPA8&ab_channel=SmallAcademy
-public class Register extends AppCompatActivity {
-    EditText FullName1, Email1, Password1;
-    Button RegisterBtn1;
-    TextView LoginBtn1;
+public class LoginActivity extends AppCompatActivity {
+
+    EditText Email1, Password1;
+    Button LoginBtn1;
+    TextView CreateBtn1;
     FirebaseAuth Auth1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        FullName1 = findViewById(R.id.FullName);
+        setContentView(R.layout.activity_login);
+
         Email1 = findViewById(R.id.Email);
-        Password1 = findViewById(R.id.Password);
-        RegisterBtn1 = findViewById(R.id.RegisterBtn);
-        LoginBtn1 = findViewById(R.id.LoginLink);
+        Password1 = findViewById(R.id.password);
         Auth1 = FirebaseAuth.getInstance();
+        LoginBtn1 = findViewById(R.id.LoginBtn);
+        CreateBtn1 = findViewById(R.id.textView3);
 
 
-//        if(fAuth.getCurrentUser() != null)
-//        {
-//            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-//            finish();
-//        }
-
-        RegisterBtn1.setOnClickListener(new View.OnClickListener() {
+        LoginBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String emailTest = Email1.getText().toString().trim();
                 String passwordTest = Password1.getText().toString().trim();
+
                 if (TextUtils.isEmpty(emailTest)) {
                     Email1.setError("Email is Required");
                     return;
@@ -57,30 +53,28 @@ public class Register extends AppCompatActivity {
                     Password1.setError("Password must greater or equal to 6 charchters");
                     return;
                 }
-                // progressorBar.setVisibility(1);
-                //  REGISTER THE DATA BASE TO FIREBASE
-                Auth1.createUserWithEmailAndPassword(emailTest, passwordTest).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+                // Authentication
+                Auth1.signInWithEmailAndPassword(emailTest, passwordTest).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(Register.this, "You Have Susccefully Registered ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Logged in Succefully", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else if (!task.isSuccessful()) {
-                            Toast.makeText(Register.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
-
                 });
-
             }
         });
 
-        LoginBtn1.setOnClickListener(new View.OnClickListener() {
+
+        CreateBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Login.class));
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
             }
         });
-
     }
 }

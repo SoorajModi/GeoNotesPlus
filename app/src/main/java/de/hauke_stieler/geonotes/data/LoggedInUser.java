@@ -1,4 +1,4 @@
-package de.hauke_stieler.geonotes.data.model;
+package de.hauke_stieler.geonotes.data;
 
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository

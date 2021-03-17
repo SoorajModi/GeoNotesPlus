@@ -1,4 +1,4 @@
-package de.hauke_stieler.geonotes.settings;
+package de.hauke_stieler.geonotes;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

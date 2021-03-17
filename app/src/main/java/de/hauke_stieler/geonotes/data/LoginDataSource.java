@@ -1,7 +1,5 @@
 package de.hauke_stieler.geonotes.data;
 
-import de.hauke_stieler.geonotes.data.model.LoggedInUser;
-
 import java.io.IOException;
 
 /**

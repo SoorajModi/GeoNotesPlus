@@ -23,7 +23,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import de.hauke_stieler.geonotes.map.Map;
 import de.hauke_stieler.geonotes.map.TouchDownListener;
-import de.hauke_stieler.geonotes.settings.SettingsActivity;
+
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.events.DelayedMapListener;
 import org.osmdroid.events.MapListener;
