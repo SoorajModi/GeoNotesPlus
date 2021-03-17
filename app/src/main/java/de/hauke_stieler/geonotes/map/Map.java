@@ -8,19 +8,13 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.PowerManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MotionEvent;
-import android.view.View;
-import android.provider.MediaStore;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.events.MapListener;
-import org.osmdroid.events.ScrollEvent;
-import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.CustomZoomButtonsController;
@@ -38,8 +32,8 @@ import de.hauke_stieler.geonotes.notes.Note;
 import de.hauke_stieler.geonotes.notes.NoteStore;
 
 public class Map {
-    private MapView map;
-    private IMapController mapController;
+    private final MapView map;
+    private final IMapController mapController;
     private MarkerWindow markerInfoWindow;
     private Marker.OnMarkerClickListener markerClickListener;
 
@@ -49,11 +43,11 @@ public class Map {
     private CompassOverlay compassOverlay;
     private ScaleBarOverlay scaleBarOverlay;
 
-    private PowerManager.WakeLock wakeLock;
-    private Drawable normalIcon;
-    private Drawable selectedIcon;
+    private final PowerManager.WakeLock wakeLock;
+    private final Drawable normalIcon;
+    private final Drawable selectedIcon;
 
-    private NoteStore noteStore;
+    private final NoteStore noteStore;
 
     public Map(Context context, MapView map, PowerManager.WakeLock wakeLock, Drawable locationIcon, Drawable normalIcon, Drawable selectedIcon) {
         this.wakeLock = wakeLock;

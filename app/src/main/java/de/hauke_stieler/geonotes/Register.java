@@ -8,18 +8,19 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.view.View;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-// CODE iS INFULUNCED BY A YOUTUBE SOURCE : https://www.youtube.com/watch?v=TwHmrZxiPA8&ab_channel=SmallAcademy
+
+// CODE iS INFLUENCED BY A YOUTUBE SOURCE : https://www.youtube.com/watch?v=TwHmrZxiPA8&ab_channel=SmallAcademy
 public class Register extends AppCompatActivity {
-    EditText FullName1,Email1,Password1;
-    Button RegsiterBtn1;
+    EditText FullName1, Email1, Password1;
+    Button RegisterBtn1;
     TextView LoginBtn1;
     FirebaseAuth Auth1;
 
@@ -30,7 +31,7 @@ public class Register extends AppCompatActivity {
         FullName1 = findViewById(R.id.FullName);
         Email1 = findViewById(R.id.Email);
         Password1 = findViewById(R.id.Password);
-        RegsiterBtn1 = findViewById(R.id.RegisterBtn);
+        RegisterBtn1 = findViewById(R.id.RegisterBtn);
         LoginBtn1 = findViewById(R.id.LoginLink);
         Auth1 = FirebaseAuth.getInstance();
 
@@ -41,35 +42,31 @@ public class Register extends AppCompatActivity {
 //            finish();
 //        }
 
-        RegsiterBtn1.setOnClickListener(new View.OnClickListener() {
+        RegisterBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String emailTest = Email1.getText().toString().trim();
                 String passwordTest = Password1.getText().toString().trim();
-                if(TextUtils.isEmpty(emailTest)){
+                if (TextUtils.isEmpty(emailTest)) {
                     Email1.setError("Email is Required");
                     return;
-                }
-                else if(TextUtils.isEmpty(passwordTest)){
+                } else if (TextUtils.isEmpty(passwordTest)) {
                     Password1.setError("Password is Required");
                     return;
-                }
-                else if(passwordTest.length() < 6)
-                {
+                } else if (passwordTest.length() < 6) {
                     Password1.setError("Password must greater or equal to 6 charchters");
                     return;
                 }
-               // progressorBar.setVisibility(1);
-               //  REGISTER THE DATA BASE TO FIREBASE
-                Auth1.createUserWithEmailAndPassword(emailTest,passwordTest).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                // progressorBar.setVisibility(1);
+                //  REGISTER THE DATA BASE TO FIREBASE
+                Auth1.createUserWithEmailAndPassword(emailTest, passwordTest).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Toast.makeText(Register.this, "You Have Susccefully Registered ", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                        }
-                        else if (!task.isSuccessful()){
-                            Toast.makeText(Register.this, "Error!" +task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        } else if (!task.isSuccessful()) {
+                            Toast.makeText(Register.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -81,7 +78,7 @@ public class Register extends AppCompatActivity {
         LoginBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Login.class));
+                startActivity(new Intent(getApplicationContext(), Login.class));
             }
         });
 
