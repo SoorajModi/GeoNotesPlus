@@ -31,6 +31,9 @@ import de.hauke_stieler.geonotes.R;
 import de.hauke_stieler.geonotes.notes.Note;
 import de.hauke_stieler.geonotes.notes.NoteStore;
 
+/**
+ * Class to handles displaying and interacting with the Map seen on the main page
+ */
 public class Map {
     private final MapView map;
     private final IMapController mapController;
@@ -49,6 +52,16 @@ public class Map {
 
     private final NoteStore noteStore;
 
+    /**
+     * Constructor to create a new instance of Map
+     *
+     * @param context - application context
+     * @param map - view of map
+     * @param wakeLock - wake lock
+     * @param locationIcon - icon for location
+     * @param normalIcon - default icon
+     * @param selectedIcon - icon for selected icon
+     */
     public Map(Context context, MapView map, PowerManager.WakeLock wakeLock, Drawable locationIcon, Drawable normalIcon, Drawable selectedIcon) {
         this.wakeLock = wakeLock;
         this.normalIcon = normalIcon;
@@ -77,6 +90,13 @@ public class Map {
         }
     }
 
+    /**
+     * Will create an overlay on the map
+     *
+     * @param context - application context
+     * @param map - view of map
+     * @param locationIcon - icon for location
+     */
     private void createOverlays(Context context, MapView map, BitmapDrawable locationIcon) {
         // Add location icon
         locationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(context), map);
@@ -159,6 +179,12 @@ public class Map {
         map.getOverlays().add(new MapEventsOverlay(mapEventsReceiver));
     }
 
+    /**
+     * Will add listener to the map
+     *
+     * @param listener - listener to be added onto map
+     * @param touchDownListener - listener to be added onto map on touch
+     */
     @SuppressLint("ClickableViewAccessibility")
     public void addMapListener(MapListener listener, TouchDownListener touchDownListener) {
         map.addMapListener(listener);
@@ -170,6 +196,11 @@ public class Map {
         });
     }
 
+    /**
+     * Will create new marker window
+     *
+     * @param map - map
+     */
     private void createMarkerWindow(MapView map) {
         // General marker info window
         markerInfoWindow = new MarkerWindow(R.layout.maker_window, map, new MarkerWindow.MarkerEventHandler() {
@@ -207,6 +238,11 @@ public class Map {
         });
     }
 
+    /**
+     * Select a marker on the map
+     *
+     * @param marker - marker to be set as selected marker
+     */
     private void selectMarker(Marker marker) {
         Marker selectedMarker = markerInfoWindow.getSelectedMarker();
         if (selectedMarker != null) {
@@ -219,26 +255,57 @@ public class Map {
         markerInfoWindow.focusEditField();
     }
 
+    /**
+     * Set a selected icon
+     *
+     * @param marker - marker for selected icon
+     */
     private void setSelectedIcon(Marker marker) {
         marker.setIcon(selectedIcon);
     }
 
+    /**
+     * Set a selected icon
+     *
+     * @param marker - marker for normal icon
+     */
     private void setNormalIcon(Marker marker) {
         marker.setIcon(normalIcon);
     }
 
+    /**
+     * Will enable or disable zoom button visibility
+     *
+     * @param visible - if the marker should be visible or invisible
+     */
     public void setZoomButtonVisibility(boolean visible) {
         map.getZoomController().setVisibility(visible ? CustomZoomButtonsController.Visibility.ALWAYS : CustomZoomButtonsController.Visibility.NEVER);
     }
 
+    /**
+     * Set map scale factor
+     *
+     * @param factor - scale factor
+     */
     public void setMapScaleFactor(float factor) {
         map.setTilesScaleFactor(factor);
     }
 
+    /**
+     * Will center location
+     *
+     * @param p - location of note
+     */
     private void centerLocationWithOffset(GeoPoint p) {
         centerLocationWithOffset(p, map.getZoomLevelDouble());
     }
 
+    /**
+     * Will centre location with specified zoom
+     *
+     * @param p - location of note
+     * @param zoom - level of zoom
+     */
     private void centerLocationWithOffset(GeoPoint p, double zoom) {
         Point locationInPixels = new Point();
         map.getProjection().toPixels(p, locationInPixels);
@@ -248,6 +315,13 @@ public class Map {
         mapController.setZoom(zoom);
     }
 
+    /**
+     * Will create a new instance of a Marker
+     *
+     * @param description - description of marker
+     * @param p - location of marker
+     * @param markerClickListener - listener for marker
+     */
     private Marker createMarker(String description, GeoPoint p, Marker.OnMarkerClickListener markerClickListener) {
         Marker marker = new Marker(map);
         marker.setPosition(p);
@@ -262,36 +336,72 @@ public class Map {
         return marker;
     }
 
+    /**
+     * Will resume map
+     */
     public void onResume() {
         map.onResume();
     }
 
+    /**
+     * Will pause map
+     */
     public void onPause() {
         map.onPause();
     }
 
+    /**
+     * Will release wakelock
+     */
     public void onDestroy() {
         wakeLock.release();
     }
 
+    /**
+     * Will centre location with given latitude
+     *
+     * @param lat - latitude to centre location on
+     */
     public void setLatitude(float lat) {
         double lon = map.getMapCenter().getLongitude();
         centerLocationWithOffset(new GeoPoint(lat, lon));
     }
 
+    /**
+     * Will centre location with given longitude
+     *
+     * @param lon - longitude to centre location on
+     */
     public void setLongitude(float lon) {
         double lat = map.getMapCenter().getLatitude();
         centerLocationWithOffset(new GeoPoint(lat, lon));
     }
 
+    /**
+     * Will return location of central point on map
+     *
+     * @return - geo point of center of map
+     */
     public IGeoPoint getLocation() {
         return map.getMapCenter();
     }
 
+    /**
+     * Will centre location
+     *
+     * @param lat - latitude to centre location on
+     * @param lon - longitude to centre location on
+     * @param zoom - level of zoom
+     */
     public void setLocation(float lat, float lon, float zoom) {
         centerLocationWithOffset(new GeoPoint(lat, lon), zoom);
     }
 
+    /**
+     * Will get the current zoom level
+     *
+     * @return - zoom level
+     */
     public float getZoom() {
         return (float) map.getZoomLevelDouble();
     }
@@ -307,6 +417,11 @@ public class Map {
         }
     }
 
+    /**
+     * Checks if follow location is enabled
+     *
+     * @return - true or false
+     */
     public boolean isFollowLocationEnabled() {
         return this.locationOverlay.isFollowLocationEnabled();
     }

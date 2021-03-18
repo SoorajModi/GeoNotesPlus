@@ -33,6 +33,9 @@ import org.osmdroid.views.MapView;
 
 import java.util.ArrayList;
 
+/**
+ * Activity class that main page of the app
+ */
 public class MainActivity extends AppCompatActivity {
 
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
@@ -40,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
     private Map map;
     private SharedPreferences preferences;
 
+    /**
+     * Create Main Page
+     *
+     * @param savedInstanceState - instance of the app
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
         loadPreferences();
     }
 
+    /**
+     * Create Map for main page
+     *
+     * @param context - application context
+     */
     private void createMap(Context context) {
         // Keep device on
         final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -85,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
         addMapListener();
     }
 
+    /**
+     * Load user preferences
+     */
     private void loadPreferences() {
         for (String key : preferences.getAll().keySet()) {
             preferenceChanged(preferences, key);
@@ -97,6 +113,12 @@ public class MainActivity extends AppCompatActivity {
         map.setLocation(lat, lon, zoom);
     }
 
+    /**
+     * Update user preference upon change
+     *
+     * @param pref - user preferences to be updated
+     * @param key - user preferences key
+     */
     private void preferenceChanged(SharedPreferences pref, String key) {
         if (getString(R.string.pref_zoom_buttons).equals(key)) {
             boolean showZoomButtons = pref.getBoolean(key, true);
@@ -107,12 +129,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Create Options Menu Page
+     *
+     * @param menu - options menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
 
+    /**
+     * Handles changes to menu item
+     *
+     * @param item - menu item that was selected
+     */
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -136,29 +168,50 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Resume main activity
+     */
     @Override
     public void onResume() {
         super.onResume();
         map.onResume();
     }
 
+    /**
+     * Pause main activity
+     */
     @Override
     public void onPause() {
         map.onPause();
         super.onPause();
     }
 
+    /**
+     * Destroy main activity
+     */
     @Override
     protected void onDestroy() {
         map.onDestroy();
         super.onDestroy();
     }
 
+    /**
+     * Request permissions result, wrapper for requestPermissionsIfNecessary
+     *
+     * @param requestCode - request code
+     * @param permissions - list of permissions
+     * @param grantResults - list of grant results
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         requestPermissionsIfNecessary(permissions);
     }
 
+    /**
+     * Request permissions result
+     *
+     * @param permissions - list of permissions
+     */
     private void requestPermissionsIfNecessary(String[] permissions) {
         ArrayList<String> permissionsToRequest = new ArrayList<>();
         for (String permission : permissions) {
@@ -176,6 +229,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Adds listener to Map
+     */
     private void addMapListener() {
         DelayedMapListener delayedMapListener = new DelayedMapListener(new MapListener() {
             @Override

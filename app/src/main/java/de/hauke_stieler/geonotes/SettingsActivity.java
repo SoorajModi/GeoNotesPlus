@@ -10,10 +10,18 @@ import androidx.appcompat.widget.Toolbar;
 
 import de.hauke_stieler.geonotes.R;
 
+/**
+ * Activity class that handles application settings
+ */
 public class SettingsActivity extends AppCompatActivity {
 
     SharedPreferences preferences;
 
+    /**
+     * Create settings page
+     *
+     * @param savedInstanceState - application state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +38,9 @@ public class SettingsActivity extends AppCompatActivity {
         load();
     }
 
+    /**
+     * Load user settings
+     */
     private void load() {
         boolean prefZoomButtons = preferences.getBoolean(getString(R.string.pref_zoom_buttons), true);
         ((Switch) findViewById(R.id.settings_zoom_switch)).setChecked(prefZoomButtons);
@@ -38,6 +49,9 @@ public class SettingsActivity extends AppCompatActivity {
         ((EditText) findViewById(R.id.settings_scale_input)).setText("" + prefMapScaling);
     }
 
+    /**
+     * Save user settings
+     */
     private void save() {
         SharedPreferences.Editor editor = preferences.edit();
 
@@ -58,6 +72,9 @@ public class SettingsActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    /**
+     * Save settings and finish activity
+     */
     @Override
     public boolean onSupportNavigateUp() {
         save();

@@ -18,12 +18,20 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 // CODE iS INFLUENCED BY A YOUTUBE SOURCE : https://www.youtube.com/watch?v=TwHmrZxiPA8&ab_channel=SmallAcademy
+/**
+ * Activity class that handles user registration with the app
+ */
 public class RegisterActivity extends AppCompatActivity {
     EditText FullName1, Email1, Password1;
     Button RegisterBtn1;
     TextView LoginBtn1;
     FirebaseAuth Auth1;
 
+    /**
+     * Create registration page
+     *
+     * @param savedInstanceState - application state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

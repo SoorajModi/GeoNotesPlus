@@ -18,6 +18,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 // CODE IS INFLUENCED BY A YOUTUBE SOURCE : https://www.youtube.com/watch?v=TwHmrZxiPA8&ab_channel=SmallAcademy
 
+/**
+ * Activity class that handles user login and authentication
+ */
 public class LoginActivity extends AppCompatActivity {
 
     EditText Email1, Password1;
@@ -25,6 +28,11 @@ public class LoginActivity extends AppCompatActivity {
     TextView CreateBtn1;
     FirebaseAuth Auth1;
 
+    /**
+     * Create login page
+     *
+     * @param savedInstanceState - application state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
