@@ -11,7 +11,7 @@ public class LoggedInUser {
     /**
      * Constructor to create a new instance of a LoggedInUser
      *
-     * @param userId - unique user id
+     * @param userId      - unique user id
      * @param displayName - user's display name
      */
     public LoggedInUser(String userId, String displayName) {

@@ -2,11 +2,9 @@ package de.hauke_stieler.geonotes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -16,16 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import de.hauke_stieler.geonotes.notes.Note;
 import de.hauke_stieler.geonotes.notes.NoteAdapter;
 import de.hauke_stieler.geonotes.notes.NoteStore;
-import de.hauke_stieler.geonotes.SettingsActivity;
 
 /*
  * Activity class for listing user notes
@@ -43,7 +36,7 @@ public class ListNotesActivity extends AppCompatActivity {
      */
     @SuppressLint("ResourceType")
     @Override
-    protected void onCreate (Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_activity);
 
@@ -75,8 +68,8 @@ public class ListNotesActivity extends AppCompatActivity {
         List<Note> list = noteStore.getAllNotes(is_desc_order);
 
         // Display notes from database in app
-        arrayAdapter = new NoteAdapter(this, (ArrayList)list);
-        ListView lv = (ListView)findViewById(R.id.note_list);
+        arrayAdapter = new NoteAdapter(this, (ArrayList) list);
+        ListView lv = (ListView) findViewById(R.id.note_list);
         lv.setAdapter(arrayAdapter);
     }
 

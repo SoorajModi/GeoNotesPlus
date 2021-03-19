@@ -1,7 +1,6 @@
 package de.hauke_stieler.geonotes.map;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
@@ -9,15 +8,10 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.TextView;
-
-import androidx.core.content.res.ResourcesCompat;
 
 import org.osmdroid.api.IMapView;
 import org.osmdroid.views.MapView;
@@ -59,8 +53,8 @@ public class MarkerWindow extends InfoWindow {
     /**
      * Constructor to create a new instance of MarkerWindow
      *
-     * @param layoutResId - layout
-     * @param mapView - view of map
+     * @param layoutResId        - layout
+     * @param mapView            - view of map
      * @param markerEventHandler - event handler for marker events
      */
     public MarkerWindow(int layoutResId, MapView mapView, MarkerEventHandler markerEventHandler) {

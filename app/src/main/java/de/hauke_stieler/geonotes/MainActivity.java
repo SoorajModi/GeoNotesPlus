@@ -15,10 +15,7 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,14 +28,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
-
-import de.hauke_stieler.geonotes.map.Map;
-import de.hauke_stieler.geonotes.map.TouchDownListener;
-import de.hauke_stieler.geonotes.SettingsActivity;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.events.DelayedMapListener;
@@ -48,6 +39,9 @@ import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.views.MapView;
 
 import java.util.ArrayList;
+
+import de.hauke_stieler.geonotes.map.Map;
+import de.hauke_stieler.geonotes.map.TouchDownListener;
 
 /**
  * Activity class that main page of the app

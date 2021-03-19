@@ -1,9 +1,9 @@
 package de.hauke_stieler.geonotes.firebase;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
-import androidx.annotation.NonNull;
 
 /**
  * Class to interact with Firebase

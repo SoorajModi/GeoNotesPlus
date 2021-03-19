@@ -10,10 +10,6 @@ import android.net.Uri;
 import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
-import android.view.View;
-import android.provider.MediaStore;
-import android.widget.Button;
-import android.widget.Switch;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
@@ -63,11 +59,11 @@ public class Map {
     /**
      * Constructor to create a new instance of Map
      *
-     * @param context - application context
-     * @param map - view of map
-     * @param wakeLock - wake lock
+     * @param context      - application context
+     * @param map          - view of map
+     * @param wakeLock     - wake lock
      * @param locationIcon - icon for location
-     * @param normalIcon - default icon
+     * @param normalIcon   - default icon
      * @param selectedIcon - icon for selected icon
      */
     public Map(Context context, MapView map, PowerManager.WakeLock wakeLock, Drawable locationIcon, Drawable normalIcon, Drawable selectedIcon) {
@@ -101,8 +97,8 @@ public class Map {
     /**
      * Will create an overlay on the map
      *
-     * @param context - application context
-     * @param map - view of map
+     * @param context      - application context
+     * @param map          - view of map
      * @param locationIcon - icon for location
      */
     private void createOverlays(Context context, MapView map, BitmapDrawable locationIcon) {
@@ -190,7 +186,7 @@ public class Map {
     /**
      * Will add listener to the map
      *
-     * @param listener - listener to be added onto map
+     * @param listener          - listener to be added onto map
      * @param touchDownListener - listener to be added onto map on touch
      */
     @SuppressLint("ClickableViewAccessibility")
@@ -334,7 +330,7 @@ public class Map {
     /**
      * Will centre location with specified zoom
      *
-     * @param p - location of note
+     * @param p    - location of note
      * @param zoom - level of zoom
      */
     private void centerLocationWithOffset(GeoPoint p, double zoom) {
@@ -349,8 +345,8 @@ public class Map {
     /**
      * Will create a new instance of a Marker
      *
-     * @param description - description of marker
-     * @param p - location of marker
+     * @param description         - description of marker
+     * @param p                   - location of marker
      * @param markerClickListener - listener for marker
      */
     private Marker createMarker(String description, GeoPoint p, Marker.OnMarkerClickListener markerClickListener) {
@@ -420,8 +416,8 @@ public class Map {
     /**
      * Will centre location
      *
-     * @param lat - latitude to centre location on
-     * @param lon - longitude to centre location on
+     * @param lat  - latitude to centre location on
+     * @param lon  - longitude to centre location on
      * @param zoom - level of zoom
      */
     public void setLocation(float lat, float lon, float zoom) {

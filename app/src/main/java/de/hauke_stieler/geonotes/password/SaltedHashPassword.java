@@ -1,7 +1,7 @@
 package de.hauke_stieler.geonotes.password;
 
-import java.util.Random;
 import java.security.MessageDigest;
+import java.util.Random;
 
 /**
  * A utility class for salted hash password
