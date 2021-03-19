@@ -27,12 +27,20 @@ import de.hauke_stieler.geonotes.notes.NoteAdapter;
 import de.hauke_stieler.geonotes.notes.NoteStore;
 import de.hauke_stieler.geonotes.SettingsActivity;
 
+/*
+ * Activity class for listing user notes
+ */
 public class ListNotesActivity extends AppCompatActivity {
     private NoteStore noteStore;
     private ArrayAdapter<Note> arrayAdapter;
     private Button btn_sort;
     private boolean is_desc_order = true;
 
+    /**
+     * Create List Notes Page
+     *
+     * @param savedInstanceState - instance of the app
+     */
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -58,6 +66,11 @@ public class ListNotesActivity extends AppCompatActivity {
         sortNotes(is_desc_order);
     }
 
+    /**
+     * Sort user notes
+     *
+     * @param is_desc_order - true/false if notes should be sorted in descending order
+     */
     public void sortNotes(boolean is_desc_order) {
         List<Note> list = noteStore.getAllNotes(is_desc_order);
 
@@ -67,12 +80,22 @@ public class ListNotesActivity extends AppCompatActivity {
         lv.setAdapter(arrayAdapter);
     }
 
+    /**
+     * Create Options menu
+     *
+     * @param menu - options menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.all_note_menu, menu);
         return true;
     }
 
+    /**
+     * When an item in the menu is selected
+     *
+     * @param item - menu item selected
+     */
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -86,6 +109,9 @@ public class ListNotesActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Finish activity
+     */
     @Override
     public boolean onSupportNavigateUp() {
         finish();

@@ -133,6 +133,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Switch application to dark mode
+     */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void setDarkMode() {
         Switch switchDarkMode = findViewById(R.id.settings_dark_mode);
