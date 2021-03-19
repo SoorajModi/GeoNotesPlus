@@ -2,11 +2,9 @@ package de.hauke_stieler.geonotes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -16,26 +14,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import de.hauke_stieler.geonotes.notes.Note;
 import de.hauke_stieler.geonotes.notes.NoteAdapter;
 import de.hauke_stieler.geonotes.notes.NoteStore;
-import de.hauke_stieler.geonotes.settings.SettingsActivity;
 
+/*
+ * Activity class for listing user notes
+ */
 public class ListNotesActivity extends AppCompatActivity {
     private NoteStore noteStore;
     private ArrayAdapter<Note> arrayAdapter;
     private Button btn_sort;
     private boolean is_desc_order = true;
 
+    /**
+     * Create List Notes Page
+     *
+     * @param savedInstanceState - instance of the app
+     */
     @SuppressLint("ResourceType")
     @Override
-    protected void onCreate (Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_activity);
 
@@ -58,21 +59,36 @@ public class ListNotesActivity extends AppCompatActivity {
         sortNotes(is_desc_order);
     }
 
+    /**
+     * Sort user notes
+     *
+     * @param is_desc_order - true/false if notes should be sorted in descending order
+     */
     public void sortNotes(boolean is_desc_order) {
         List<Note> list = noteStore.getAllNotes(is_desc_order);
 
         // Display notes from database in app
-        arrayAdapter = new NoteAdapter(this, (ArrayList)list);
-        ListView lv = (ListView)findViewById(R.id.note_list);
+        arrayAdapter = new NoteAdapter(this, (ArrayList) list);
+        ListView lv = (ListView) findViewById(R.id.note_list);
         lv.setAdapter(arrayAdapter);
     }
 
+    /**
+     * Create Options menu
+     *
+     * @param menu - options menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.all_note_menu, menu);
         return true;
     }
 
+    /**
+     * When an item in the menu is selected
+     *
+     * @param item - menu item selected
+     */
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -86,6 +102,9 @@ public class ListNotesActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Finish activity
+     */
     @Override
     public boolean onSupportNavigateUp() {
         finish();

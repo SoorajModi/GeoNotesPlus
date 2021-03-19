@@ -1,7 +1,6 @@
 package de.hauke_stieler.geonotes.map;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
@@ -9,21 +8,19 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.TextView;
-
-import androidx.core.content.res.ResourcesCompat;
 
 import org.osmdroid.api.IMapView;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.infowindow.InfoWindow;
 
+/**
+ * Class that handles interactions with the marker placed by the user on the map
+ */
 public class MarkerWindow extends InfoWindow {
     public interface MarkerEventHandler {
         void onDelete(Marker marker);
@@ -53,6 +50,13 @@ public class MarkerWindow extends InfoWindow {
             mSubDescriptionId = UNDEFINED_RES_ID,
             mImageId = UNDEFINED_RES_ID;
 
+    /**
+     * Constructor to create a new instance of MarkerWindow
+     *
+     * @param layoutResId        - layout
+     * @param mapView            - view of map
+     * @param markerEventHandler - event handler for marker events
+     */
     public MarkerWindow(int layoutResId, MapView mapView, MarkerEventHandler markerEventHandler) {
         super(layoutResId, mapView);
 
@@ -103,6 +107,11 @@ public class MarkerWindow extends InfoWindow {
         }
     }
 
+    /**
+     * Will set res ids
+     *
+     * @param context - application context
+     */
     private static void setResIds(Context context) {
         String packageName = context.getPackageName(); //get application package name
         mTitleId = context.getResources().getIdentifier("id/bubble_title", null, packageName);
@@ -119,6 +128,11 @@ public class MarkerWindow extends InfoWindow {
         }
     }
 
+    /**
+     * On marker window open
+     *
+     * @param item
+     */
     @Override
     public void onOpen(Object item) {
         if (mView == null) {
@@ -176,15 +190,26 @@ public class MarkerWindow extends InfoWindow {
         });
     }
 
+    /**
+     * On marker window close
+     */
     @Override
     public void onClose() {
         this.selectedMarker = null;
     }
 
+    /**
+     * Will get selected marker
+     *
+     * @return - selected marker
+     */
     public Marker getSelectedMarker() {
         return selectedMarker;
     }
 
+    /**
+     * Will focus on edit field
+     */
     public void focusEditField() {
         EditText descriptionView = mView.findViewById(mDescriptionId /*R.id.description*/);
         descriptionView.requestFocus();

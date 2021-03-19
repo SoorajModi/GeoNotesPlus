@@ -13,13 +13,9 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,14 +28,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
-
-import de.hauke_stieler.geonotes.map.Map;
-import de.hauke_stieler.geonotes.map.TouchDownListener;
-import de.hauke_stieler.geonotes.settings.SettingsActivity;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.events.DelayedMapListener;
@@ -50,6 +40,12 @@ import org.osmdroid.views.MapView;
 
 import java.util.ArrayList;
 
+import de.hauke_stieler.geonotes.map.Map;
+import de.hauke_stieler.geonotes.map.TouchDownListener;
+
+/**
+ * Activity class that main page of the app
+ */
 public class MainActivity extends AppCompatActivity {
 
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
@@ -57,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
     private Map map;
     private SharedPreferences preferences;
 
+    /**
+     * Create Main Page
+     *
+     * @param savedInstanceState - instance of the app
+     */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,11 @@ public class MainActivity extends AppCompatActivity {
         loadPreferences();
     }
 
+    /**
+     * Create Map for main page
+     *
+     * @param context - application context
+     */
     private void createMap(Context context) {
         // Keep device on
         final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -104,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
         addMapListener();
     }
 
+    /**
+     * Load user preferences
+     */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadPreferences() {
         for (String key : preferences.getAll().keySet()) {
@@ -117,6 +126,12 @@ public class MainActivity extends AppCompatActivity {
         map.setLocation(lat, lon, zoom);
     }
 
+    /**
+     * Update user preference upon change
+     *
+     * @param pref - user preferences to be updated
+     * @param key  - user preferences key
+     */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void preferenceChanged(SharedPreferences pref, String key) {
         if (getString(R.string.pref_zoom_buttons).equals(key)) {
@@ -129,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
             boolean is_dark_mode = pref.getBoolean(key, false);
             Toolbar toolbar = findViewById(R.id.toolbar);
             LinearLayout ll = findViewById(R.id.main_page);
-            if(is_dark_mode) {
+            if (is_dark_mode) {
                 toolbar.setBackgroundColor(getResources().getColor(R.color.light_grey));
                 getWindow().setStatusBarColor(getResources().getColor(R.color.black));
                 ll.setBackgroundColor(getResources().getColor(R.color.dark_grey));
@@ -153,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Intent intent;
-                switch(item.getItemId()) {
+                switch (item.getItemId()) {
                     case R.id.list_all_notes:
                         System.out.println("GN: Listing all notes");
                         intent = new Intent(MainActivity.this, ListNotesActivity.class);
@@ -172,12 +187,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Create Options Menu Page
+     *
+     * @param menu - options menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
 
+    /**
+     * Handles changes to menu item
+     *
+     * @param item - menu item that was selected
+     */
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -206,6 +231,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Resume main activity
+     */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onResume() {
@@ -214,23 +242,41 @@ public class MainActivity extends AppCompatActivity {
         map.onResume();
     }
 
+    /**
+     * Pause main activity
+     */
     @Override
     public void onPause() {
         map.onPause();
         super.onPause();
     }
 
+    /**
+     * Destroy main activity
+     */
     @Override
     protected void onDestroy() {
         map.onDestroy();
         super.onDestroy();
     }
 
+    /**
+     * Request permissions result, wrapper for requestPermissionsIfNecessary
+     *
+     * @param requestCode  - request code
+     * @param permissions  - list of permissions
+     * @param grantResults - list of grant results
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         requestPermissionsIfNecessary(permissions);
     }
 
+    /**
+     * Request permissions result
+     *
+     * @param permissions - list of permissions
+     */
     private void requestPermissionsIfNecessary(String[] permissions) {
         ArrayList<String> permissionsToRequest = new ArrayList<>();
         for (String permission : permissions) {
@@ -248,6 +294,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Adds listener to Map
+     */
     private void addMapListener() {
         DelayedMapListener delayedMapListener = new DelayedMapListener(new MapListener() {
             @Override
