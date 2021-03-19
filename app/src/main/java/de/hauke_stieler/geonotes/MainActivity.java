@@ -6,23 +6,39 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
+import com.google.android.material.navigation.NavigationView;
+
 import de.hauke_stieler.geonotes.map.Map;
 import de.hauke_stieler.geonotes.map.TouchDownListener;
+import de.hauke_stieler.geonotes.SettingsActivity;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.events.DelayedMapListener;
@@ -48,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param savedInstanceState - instance of the app
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        createHamburgerMenu(toolbar);
 
         // Set HTML text of copyright label
         ((TextView) findViewById(R.id.copyright)).setMovementMethod(LinkMovementMethod.getInstance());
@@ -86,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         // Keep device on
         final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "geonotes:wakelock");
-        wakeLock.acquire(10*60*1000L /*10 minutes*/);
+        wakeLock.acquire(10 * 60 * 1000L /*10 minutes*/);
 
         Drawable locationIcon = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_location, null);
         Drawable selectedIcon = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_note_selected, null);
@@ -101,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Load user preferences
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadPreferences() {
         for (String key : preferences.getAll().keySet()) {
             preferenceChanged(preferences, key);
@@ -117,8 +136,9 @@ public class MainActivity extends AppCompatActivity {
      * Update user preference upon change
      *
      * @param pref - user preferences to be updated
-     * @param key - user preferences key
+     * @param key  - user preferences key
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void preferenceChanged(SharedPreferences pref, String key) {
         if (getString(R.string.pref_zoom_buttons).equals(key)) {
             boolean showZoomButtons = pref.getBoolean(key, true);
@@ -126,7 +146,51 @@ public class MainActivity extends AppCompatActivity {
         } else if (getString(R.string.pref_map_scaling).equals(key)) {
             float mapScale = pref.getFloat(key, 1.0f);
             map.setMapScaleFactor(mapScale);
+        } else if (getString(R.string.pref_dark_mode).equals(key)) {
+            boolean is_dark_mode = pref.getBoolean(key, false);
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            LinearLayout ll = findViewById(R.id.main_page);
+            if (is_dark_mode) {
+                toolbar.setBackgroundColor(getResources().getColor(R.color.light_grey));
+                getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+                ll.setBackgroundColor(getResources().getColor(R.color.dark_grey));
+            } else {
+                toolbar.setBackgroundColor(getResources().getColor(R.color.primary_dark));
+                getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+                ll.setBackgroundColor(Color.WHITE);
+            }
         }
+    }
+
+    private void createHamburgerMenu(Toolbar toolbar) {
+        DrawerLayout dl = (DrawerLayout) findViewById(R.id.drawerLayout);
+        ActionBarDrawerToggle t = new ActionBarDrawerToggle(this, dl, toolbar, R.string.Open, R.string.Close);
+        dl.addDrawerListener(t);
+        t.syncState();
+
+        NavigationView nv = (NavigationView) findViewById(R.id.navigationView);
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.list_all_notes:
+                        System.out.println("GN: Listing all notes");
+                        intent = new Intent(MainActivity.this, ListNotesActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.settings:
+                        System.out.println("GN: Going to settings menu");
+                        intent = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     /**
@@ -149,10 +213,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.toolbar_btn_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
             case R.id.toolbar_btn_gps_follow:
                 boolean followingLocationEnabled = !map.isFollowLocationEnabled();
                 this.map.setLocationFollowMode(followingLocationEnabled);
@@ -163,6 +223,15 @@ public class MainActivity extends AppCompatActivity {
                     item.setIcon(R.drawable.ic_location_searching);
                 }
                 return true;
+            case R.id.list_all_notes:
+                // Stuff
+                System.out.println("listing all notes");
+                return true;
+            case R.id.settings:
+                System.out.println("going to settings menu");
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -171,8 +240,10 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Resume main activity
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onResume() {
+        loadPreferences();
         super.onResume();
         map.onResume();
     }
@@ -198,8 +269,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Request permissions result, wrapper for requestPermissionsIfNecessary
      *
-     * @param requestCode - request code
-     * @param permissions - list of permissions
+     * @param requestCode  - request code
+     * @param permissions  - list of permissions
      * @param grantResults - list of grant results
      */
     @Override

@@ -33,6 +33,8 @@ public class MarkerWindow extends InfoWindow {
 
         void onSave(Marker marker);
 
+        void onShare(Marker marker);
+
         void onMove(Marker marker);
     }
 
@@ -50,6 +52,7 @@ public class MarkerWindow extends InfoWindow {
             mDeleteButtonId = UNDEFINED_RES_ID,
             mSaveButtonId = UNDEFINED_RES_ID,
             mMoveButtonId = UNDEFINED_RES_ID,
+            mShareButtonId = UNDEFINED_RES_ID,
             mSubDescriptionId = UNDEFINED_RES_ID,
             mImageId = UNDEFINED_RES_ID;
 
@@ -122,6 +125,7 @@ public class MarkerWindow extends InfoWindow {
         mDeleteButtonId = context.getResources().getIdentifier("id/delete_button", null, packageName);
         mSaveButtonId = context.getResources().getIdentifier("id/save_button", null, packageName);
         mMoveButtonId = context.getResources().getIdentifier("id/move_button", null, packageName);
+        mShareButtonId = context.getResources().getIdentifier("id/share_button", null, packageName);
         mSubDescriptionId = context.getResources().getIdentifier("id/bubble_subdescription", null, packageName);
         mImageId = context.getResources().getIdentifier("id/bubble_image", null, packageName);
         if (mTitleId == UNDEFINED_RES_ID || mDescriptionId == UNDEFINED_RES_ID
@@ -176,6 +180,12 @@ public class MarkerWindow extends InfoWindow {
         Button saveButton = mView.findViewById(mSaveButtonId /* R.id.save_button */);
         saveButton.setOnClickListener(v -> {
             markerEventHandler.onSave(marker);
+            close();
+        });
+
+        Button shareButton = mView.findViewById(mShareButtonId);
+        shareButton.setOnClickListener(v -> {
+            markerEventHandler.onShare(marker);
             close();
         });
 

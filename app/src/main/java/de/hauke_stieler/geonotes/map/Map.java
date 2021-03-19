@@ -2,6 +2,7 @@ package de.hauke_stieler.geonotes.map;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -9,6 +10,10 @@ import android.net.Uri;
 import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
+import android.view.View;
+import android.provider.MediaStore;
+import android.widget.Button;
+import android.widget.Switch;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
@@ -26,6 +31,9 @@ import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import de.hauke_stieler.geonotes.R;
 import de.hauke_stieler.geonotes.notes.Note;
@@ -84,7 +92,7 @@ public class Map {
         createMarkerWindow(map);
 
         noteStore = new NoteStore(context);
-        for (Note n : noteStore.getAllNotes()) {
+        for (Note n : noteStore.getAllNotes(false)) {
             Marker marker = createMarker(n.description, new GeoPoint(n.lat, n.lon), markerClickListener);
             marker.setId("" + n.id);
         }
@@ -222,12 +230,35 @@ public class Map {
                     noteStore.updateDescription(Long.parseLong(marker.getId()), marker.getSnippet());
                 } else {
                     // MediaType and URI will be null until image/audio notes are fully implemented
-                    Note newNote = new Note(0, marker.getSnippet(), marker.getPosition().getLatitude(), marker.getPosition().getLongitude(), Note.MediaType.NULL, Uri.parse(""));
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = new Date(System.currentTimeMillis());
+                    String date_str = formatter.format(date);
+                    Note newNote = new Note(0, marker.getSnippet(), marker.getPosition().getLatitude(), marker.getPosition().getLongitude(), Note.MediaType.NULL, Uri.parse(""), date_str);
                     long id = noteStore.addNote(newNote);
                     marker.setId("" + id);
                     // TODO: Saving the audio or image file using MediaStore API
                 }
 
+                setNormalIcon(marker);
+            }
+
+            @Override
+            public void onShare(Marker marker) {
+                // Create message to share
+                String message = "From Geonotes:\n";
+                message += marker.getSnippet();
+                message += "\nhttps://google.ca/maps/place/" + marker.getPosition().getLatitude() + "," + marker.getPosition().getLongitude();
+
+                // Create intent to send message
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+                sendIntent.setType("text/plain");
+
+                // Open sharing dialogue
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                map.getContext().startActivity(shareIntent);
                 setNormalIcon(marker);
             }
 

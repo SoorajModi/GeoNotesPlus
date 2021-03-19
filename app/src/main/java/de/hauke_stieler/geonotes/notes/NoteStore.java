@@ -10,7 +10,9 @@ import android.util.Log;
 
 import org.osmdroid.util.GeoPoint;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +29,7 @@ public class NoteStore extends SQLiteOpenHelper {
     private static final String NOTES_COL_DESCRIPTION = "description";
     private static final String NOTES_COL_MEDIATYPE = "mediaType";
     private static final String NOTES_COL_MEDIAURI = "mediaURI";
+    private static final String NOTES_COL_DATE = "date";
 
     /**
      * Generate a note store to hold all the user notes
@@ -44,20 +47,21 @@ public class NoteStore extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(String.format("CREATE TABLE IF NOT EXISTS %s(%s INTEGER PRIMARY KEY, %s DOUBLE NOT NULL, %s DOUBLE NOT NULL, %s VARCHAR NOT NULL, %s INTEGER, %s TEXT);",
+        db.execSQL(String.format("CREATE TABLE IF NOT EXISTS %s(%s INTEGER PRIMARY KEY, %s DOUBLE NOT NULL, %s DOUBLE NOT NULL, %s VARCHAR NOT NULL, %s INTEGER, %s TEXT, %s VARCHAR NOT NULL);",
                 NOTES_TABLE_NAME,
                 NOTES_COL_ID,
                 NOTES_COL_LAT,
                 NOTES_COL_LON,
                 NOTES_COL_DESCRIPTION,
                 NOTES_COL_MEDIATYPE,
-                NOTES_COL_MEDIAURI));
+                NOTES_COL_MEDIAURI,
+                NOTES_COL_DATE));
     }
 
     /**
      * Upgrades version
      *
-     * @param db - SQLite database instance
+     * @param db         - SQLite database instance
      * @param oldVersion - current version
      * @param newVersion - new version to upgrade to
      */
@@ -87,6 +91,7 @@ public class NoteStore extends SQLiteOpenHelper {
         values.put(NOTES_COL_DESCRIPTION, note.description);
         values.put(NOTES_COL_MEDIATYPE, note.mediaType.ordinal());
         values.put(NOTES_COL_MEDIAURI, note.mediaURI.toString());
+        values.put(NOTES_COL_DATE, note.date);
 
         return db.insert(NOTES_TABLE_NAME, null, values);
     }
@@ -94,15 +99,19 @@ public class NoteStore extends SQLiteOpenHelper {
     /**
      * Updates description of a note
      *
-     * @param id - id of note to be updated
+     * @param id             - id of note to be updated
      * @param newDescription - new description of note
      */
     public void updateDescription(long id, String newDescription) {
         SQLiteDatabase db = this.getWritableDatabase();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        String date_str = formatter.format(date);
 
         ContentValues values = new ContentValues();
         values.put(NOTES_COL_ID, id);
         values.put(NOTES_COL_DESCRIPTION, newDescription);
+        values.put(NOTES_COL_DATE, date_str);
 
         db.update(NOTES_TABLE_NAME, values, NOTES_COL_ID + " = ?", new String[]{"" + id});
     }
@@ -110,21 +119,26 @@ public class NoteStore extends SQLiteOpenHelper {
     /**
      * Updates geolocation of a note
      *
-     * @param id - id of note to be updated
+     * @param id       - id of note to be updated
      * @param location - new location of note
      */
     public void updateLocation(long id, GeoPoint location) {
         SQLiteDatabase db = this.getWritableDatabase();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        String date_str = formatter.format(date);
 
         ContentValues values = new ContentValues();
         values.put(NOTES_COL_ID, id);
         values.put(NOTES_COL_LAT, location.getLatitude());
         values.put(NOTES_COL_LON, location.getLongitude());
+        values.put(NOTES_COL_DATE, date_str);
 
         db.update(NOTES_TABLE_NAME, values, NOTES_COL_ID + " = ?", new String[]{"" + id});
     }
 
     // TODO: Add updateMedia function??
+
     /**
      * Removes note from DB
      *
@@ -136,17 +150,24 @@ public class NoteStore extends SQLiteOpenHelper {
         db.delete(NOTES_TABLE_NAME, NOTES_COL_ID + " = ?", new String[]{"" + id});
     }
 
+
     /**
      * Gets all notes stored in the DB
      *
+     * @param is_desc_order - true/false if the order of the notes should be descending
      * @return - list of all notes stored in DB
      */
-    public List<Note> getAllNotes() {
+    public List<Note> getAllNotes(boolean is_desc_order) {
         SQLiteDatabase db = this.getReadableDatabase();
-
+        String order = "";
+        if (is_desc_order) {
+            order = "datetime(date) desc";
+        } else {
+            order = "datetime(date) asc";
+        }
         Cursor cursor = db.query(NOTES_TABLE_NAME,
-                new String[]{NOTES_COL_ID, NOTES_COL_DESCRIPTION, NOTES_COL_LAT, NOTES_COL_LON, NOTES_COL_MEDIATYPE, NOTES_COL_MEDIAURI},
-                null, null, null, null, null
+                new String[]{NOTES_COL_ID, NOTES_COL_DESCRIPTION, NOTES_COL_LAT, NOTES_COL_LON, NOTES_COL_MEDIATYPE, NOTES_COL_MEDIAURI, NOTES_COL_DATE},
+                null, null, null, null, order
         );
 
         List<Note> notes = new ArrayList<>();
@@ -158,7 +179,8 @@ public class NoteStore extends SQLiteOpenHelper {
                         cursor.getDouble(2),
                         cursor.getDouble(3),
                         Note.MediaType.values()[cursor.getInt(4)],
-                        Uri.parse(cursor.getString(5))
+                        Uri.parse(cursor.getString(5)),
+                        cursor.getString(6)
                 ));
             } while (cursor.moveToNext());
         }

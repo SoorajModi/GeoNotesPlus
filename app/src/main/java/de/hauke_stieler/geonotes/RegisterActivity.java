@@ -20,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 // CODE iS INFLUENCED BY A YOUTUBE SOURCE : https://www.youtube.com/watch?v=TwHmrZxiPA8&ab_channel=SmallAcademy
 /**
  * Activity class that handles user registration with the app
+ *
+ * Author: Mustafa Al-Obaidi
  */
 public class RegisterActivity extends AppCompatActivity {
     EditText FullName1, Email1, Password1;
