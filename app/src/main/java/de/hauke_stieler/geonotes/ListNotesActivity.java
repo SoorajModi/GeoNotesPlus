@@ -25,7 +25,7 @@ import java.util.List;
 import de.hauke_stieler.geonotes.notes.Note;
 import de.hauke_stieler.geonotes.notes.NoteAdapter;
 import de.hauke_stieler.geonotes.notes.NoteStore;
-import de.hauke_stieler.geonotes.settings.SettingsActivity;
+import de.hauke_stieler.geonotes.SettingsActivity;
 
 public class ListNotesActivity extends AppCompatActivity {
     private NoteStore noteStore;

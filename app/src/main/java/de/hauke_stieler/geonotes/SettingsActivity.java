@@ -1,4 +1,4 @@
-package de.hauke_stieler.geonotes.settings;
+package de.hauke_stieler.geonotes;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,7 +20,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 
-import de.hauke_stieler.geonotes.Login;
+import de.hauke_stieler.geonotes.LoginActivity;
+
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -45,6 +46,9 @@ import androidx.annotation.NonNull;
 import android.util.Log;
 
 
+/**
+ * Activity class that handles application settings
+ */
 public class SettingsActivity extends AppCompatActivity {
 
     SharedPreferences preferences;
@@ -52,6 +56,11 @@ public class SettingsActivity extends AppCompatActivity {
     FirebaseAuth Auth1;
     Button LogOut;
 
+    /**
+     * Create settings page
+     *
+     * @param savedInstanceState - application state
+     */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +126,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Auth1.signOut();
                 Toast.makeText(SettingsActivity.this, "You have logged out successfully!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), Login.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         });
 
@@ -138,7 +147,7 @@ public class SettingsActivity extends AppCompatActivity {
                 EditText input = findViewById(R.id.settings_scale_input);
                 Intent intent = new Intent();
 
-                if(isChecked) {
+                if (isChecked) {
                     toolbar.setBackgroundColor(getResources().getColor(R.color.light_grey));
                     getWindow().setStatusBarColor(getResources().getColor(R.color.black));
                     ll.setBackgroundColor(getResources().getColor(R.color.dark_grey));
@@ -162,6 +171,9 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Load user settings
+     */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void load() {
         boolean prefZoomButtons = preferences.getBoolean(getString(R.string.pref_zoom_buttons), true);
@@ -175,6 +187,9 @@ public class SettingsActivity extends AppCompatActivity {
         setDarkMode();
     }
 
+    /**
+     * Save user settings
+     */
     private void save() {
         SharedPreferences.Editor editor = preferences.edit();
 
@@ -199,6 +214,9 @@ public class SettingsActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    /**
+     * Save settings and finish activity
+     */
     @Override
     public boolean onSupportNavigateUp() {
         save();
