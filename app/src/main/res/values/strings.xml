@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">GeoNotes</string>
+    <string name="app_name">GN+</string>
+    <string name="app_long_name">GeoNotes+</string>
+    <string name="title_activity_main">GeoNotes+</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Preferences -->
