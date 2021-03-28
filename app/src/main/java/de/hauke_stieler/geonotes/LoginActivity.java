@@ -44,13 +44,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Email1 = findViewById(R.id.Email);
-        Password1 = findViewById(R.id.password);
+        Email1 = findViewById(R.id.email_field);
+        Password1 = findViewById(R.id.password_field);
         Auth1 = FirebaseAuth.getInstance();
         FirebaseUser user1 = Auth1.getCurrentUser();
-        LoginBtn1 = findViewById(R.id.LoginBtn);
-        CreateBtn1 = findViewById(R.id.textView3);
-        forgotPassword = findViewById(R.id.forgotPassword);
+        LoginBtn1 = findViewById(R.id.login_button);
+        CreateBtn1 = findViewById(R.id.create_account_button);
+        forgotPassword = findViewById(R.id.forgot_password_button);
 
 
         LoginBtn1.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                     Password1.setError("Password is Required");
                     return;
                 } else if (passwordTest.length() < 6) {
-                    Password1.setError("Password must greater or equal to 6 charchters");
+                    Password1.setError("Password must greater or equal to 6 characters");
                     return;
                 }
 
