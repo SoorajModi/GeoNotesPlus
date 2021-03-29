@@ -1,6 +1,7 @@
 package de.hauke_stieler.geonotes.map;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -10,6 +11,9 @@ import android.net.Uri;
 import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
@@ -28,12 +32,16 @@ import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import de.hauke_stieler.geonotes.LoginActivity;
 import de.hauke_stieler.geonotes.R;
 import de.hauke_stieler.geonotes.notes.Note;
 import de.hauke_stieler.geonotes.notes.NoteStore;
+
+import static androidx.core.app.ActivityCompat.startActivityForResult;
 
 /**
  * Class to handles displaying and interacting with the Map seen on the main page
@@ -258,12 +266,30 @@ public class Map {
                 setNormalIcon(marker);
             }
 
+//            @Override
+//            public void insertImage(Marker marker) {
+//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult()
+//            }
             @Override
             public void onMove(Marker marker) {
                 markerToMove = marker;
             }
+
+
         });
     }
+//    public static final int PICK_IMAGE = 1;
+//
+//    public void onActivityResult(int requestCode, int resultCode, Intent data)
+//    {
+//        if (requestCode == PICK_IMAGE) {
+//            //TODO: action
+//        }
+//    }
+
 
     /**
      * Select a marker on the map
@@ -281,6 +307,7 @@ public class Map {
         marker.showInfoWindow();
         markerInfoWindow.focusEditField();
     }
+
 
     /**
      * Set a selected icon

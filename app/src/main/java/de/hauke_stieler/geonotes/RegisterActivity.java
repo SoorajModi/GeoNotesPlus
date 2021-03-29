@@ -46,13 +46,6 @@ public class RegisterActivity extends AppCompatActivity {
         LoginBtn1 = findViewById(R.id.LoginLink);
         Auth1 = FirebaseAuth.getInstance();
 
-
-//        if(fAuth.getCurrentUser() != null)
-//        {
-//            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-//            finish();
-//        }
-
         RegisterBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,8 +61,6 @@ public class RegisterActivity extends AppCompatActivity {
                     Password1.setError("Password must greater or equal to 6 charchters");
                     return;
                 }
-                // progressorBar.setVisibility(1);
-                //  REGISTER THE DATA BASE TO FIREBASE
                 Auth1.createUserWithEmailAndPassword(emailTest, passwordTest).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
