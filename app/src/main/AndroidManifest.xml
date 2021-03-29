@@ -21,10 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".PreferencesActivity"
+            android:label="Preferences" />
         <activity android:name=".ListNotesActivity"
             android:label="All Notes"/>
         <activity android:name=".MainActivity"

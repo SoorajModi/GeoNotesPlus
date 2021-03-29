@@ -28,6 +28,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -115,9 +116,20 @@ public class MainActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadPreferences() {
+        /*
         for (String key : preferences.getAll().keySet()) {
             preferenceChanged(preferences, key);
         }
+         */
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean showZoomPref = sharedPreferences.getBoolean("zoom", true);
+        System.out.println("GEONOTES+: showZoomPref is " + showZoomPref);
+        map.setZoomButtonVisibility(showZoomPref);
+
+        // TODO: Dark mode pref
+        // TODO: Map scaling pref
+
 
         float lat = preferences.getFloat(getString(R.string.pref_last_location_lat), 0f);
         float lon = preferences.getFloat(getString(R.string.pref_last_location_lon), 0f);
@@ -125,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
         map.setLocation(lat, lon, zoom);
     }
+
 
     /**
      * Update user preference upon change
@@ -134,13 +147,13 @@ public class MainActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void preferenceChanged(SharedPreferences pref, String key) {
-        if (getString(R.string.pref_zoom_buttons).equals(key)) {
+        if ("zoom".equals(key)) {
             boolean showZoomButtons = pref.getBoolean(key, true);
             map.setZoomButtonVisibility(showZoomButtons);
-        } else if (getString(R.string.pref_map_scaling).equals(key)) {
+        } else if ("scaling".equals(key)) {
             float mapScale = pref.getFloat(key, 1.0f);
             map.setMapScaleFactor(mapScale);
-        } else if (getString(R.string.pref_dark_mode).equals(key)) {
+        } else if ("dark".equals(key)) {
             boolean is_dark_mode = pref.getBoolean(key, false);
             Toolbar toolbar = findViewById(R.id.toolbar);
             LinearLayout ll = findViewById(R.id.main_page);
@@ -176,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.settings:
                         System.out.println("GN: Going to settings menu");
-                        intent = new Intent(MainActivity.this, SettingsActivity.class);
+                        intent = new Intent(MainActivity.this, PreferencesActivity.class);
                         startActivity(intent);
                         break;
                     default:

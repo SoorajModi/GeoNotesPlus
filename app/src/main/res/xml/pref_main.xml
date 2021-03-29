@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="General">
+        <SwitchPreferenceCompat
+            android:title="Show zoom buttons"
+            android:key="zoom"
+            android:icon="@drawable/ic_zoom"
+        />
+
+        <SwitchPreferenceCompat
+            android:title="Dark mode"
+            android:key="dark"
+            android:icon="@drawable/ic_dark_mode"
+        />
+
+        <EditTextPreference
+            android:title="Map scaling factor"
+            android:key="scaling"
+            android:icon="@drawable/ic_scaling"
+            android:digits="0123456789."
+            android:inputType="number"
+        />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Account">
+        <Preference
+            android:title="Change password"
+            android:key="password"
+            android:icon="@drawable/ic_password"
+        />
+
+        <Preference
+            android:title="Log out"
+            android:key="logout"
+            android:icon="@drawable/ic_logout"
+        />
+    </PreferenceCategory>
+</PreferenceScreen>
