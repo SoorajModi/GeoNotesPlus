@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Map map;
     private SharedPreferences preferences;
+    public static final int PICK_IMAGE = 1;
+
 
     /**
      * Create Main Page
@@ -335,4 +337,22 @@ public class MainActivity extends AppCompatActivity {
         editor.putFloat(getString(R.string.pref_last_location_zoom), zoom);
         editor.apply();
     }
+//    https://stackoverflow.com/questions/5309190/android-pick-images-from-gallery  this is where the example is from, just to test if it works or not
+    public void openFileChooser()
+    { // this method is to prompt the user to upload an image
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE); // the app crashes from this line
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE) {
+            //TODO: action
+        }
+    }
+
 }

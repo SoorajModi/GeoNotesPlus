@@ -17,6 +17,7 @@ import org.osmdroid.api.IMapView;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.infowindow.InfoWindow;
+import  de.hauke_stieler.geonotes.MainActivity;
 
 /**
  * Class that handles interactions with the marker placed by the user on the map
@@ -35,6 +36,7 @@ public class MarkerWindow extends InfoWindow {
     private MarkerEventHandler markerEventHandler;
 
     private Marker selectedMarker;
+    private MainActivity mainActivity;
 
     /**
      * resource id value meaning "undefined resource id"
@@ -42,6 +44,7 @@ public class MarkerWindow extends InfoWindow {
     public static final int UNDEFINED_RES_ID = 0;
 
     static int mTitleId = UNDEFINED_RES_ID,
+            mUploadImageId = UNDEFINED_RES_ID,
             mDescriptionId = UNDEFINED_RES_ID,
             mDeleteButtonId = UNDEFINED_RES_ID,
             mSaveButtonId = UNDEFINED_RES_ID,
@@ -59,6 +62,7 @@ public class MarkerWindow extends InfoWindow {
      */
     public MarkerWindow(int layoutResId, MapView mapView, MarkerEventHandler markerEventHandler) {
         super(layoutResId, mapView);
+        mainActivity = new MainActivity();
 
         this.markerEventHandler = markerEventHandler;
 
@@ -105,6 +109,12 @@ public class MarkerWindow extends InfoWindow {
                 }
             });
         }
+        Button uploadButton = mView.findViewById(mUploadImageId); //button to upload an image
+        uploadButton.setOnClickListener(v ->
+        {
+            mainActivity.openFileChooser();// call a method from the MainActivity
+            System.out.println("outside the fileChooser");
+        });
     }
 
     /**
@@ -122,6 +132,7 @@ public class MarkerWindow extends InfoWindow {
         mShareButtonId = context.getResources().getIdentifier("id/share_button", null, packageName);
         mSubDescriptionId = context.getResources().getIdentifier("id/bubble_subdescription", null, packageName);
         mImageId = context.getResources().getIdentifier("id/bubble_image", null, packageName);
+        mUploadImageId = context.getResources().getIdentifier("id/insert_Image", null, packageName);
         if (mTitleId == UNDEFINED_RES_ID || mDescriptionId == UNDEFINED_RES_ID
                 || mSubDescriptionId == UNDEFINED_RES_ID || mImageId == UNDEFINED_RES_ID) {
             Log.e(IMapView.LOGTAG, "BasicInfoWindow: unable to get res ids in " + packageName);
@@ -188,6 +199,7 @@ public class MarkerWindow extends InfoWindow {
             markerEventHandler.onMove(marker);
             close();
         });
+
     }
 
     /**
