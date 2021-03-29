@@ -17,10 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -120,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         for (String key : preferences.getAll().keySet()) {
             preferenceChanged(preferences, key);
         }
+
         float lat = preferences.getFloat(getString(R.string.pref_last_location_lat), 0f);
         float lon = preferences.getFloat(getString(R.string.pref_last_location_lon), 0f);
         float zoom = preferences.getFloat(getString(R.string.pref_last_location_zoom), 2);
@@ -335,20 +334,5 @@ public class MainActivity extends AppCompatActivity {
         editor.putFloat(getString(R.string.pref_last_location_lon), (float) location.getLongitude());
         editor.putFloat(getString(R.string.pref_last_location_zoom), zoom);
         editor.apply();
-    }
-    public void openFileChooser()
-    {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 2);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==2) {
-            System.out.println("testing the request code");
-        }
     }
 }

@@ -1,6 +1,6 @@
 package de.hauke_stieler.geonotes.map;
+
 import android.content.Context;
-import android.content.Intent;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
@@ -12,20 +12,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import org.osmdroid.api.IMapView;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
-import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
 import org.osmdroid.views.overlay.infowindow.InfoWindow;
-
-import de.hauke_stieler.geonotes.MainActivity;
-
 
 /**
  * Class that handles interactions with the marker placed by the user on the map
  */
 public class MarkerWindow extends InfoWindow {
-
     public interface MarkerEventHandler {
         void onDelete(Marker marker);
 
@@ -37,7 +33,6 @@ public class MarkerWindow extends InfoWindow {
     }
 
     private MarkerEventHandler markerEventHandler;
-    private MainActivity mainActivity;
 
     private Marker selectedMarker;
 
@@ -47,7 +42,6 @@ public class MarkerWindow extends InfoWindow {
     public static final int UNDEFINED_RES_ID = 0;
 
     static int mTitleId = UNDEFINED_RES_ID,
-            mInsertImageButtonId = UNDEFINED_RES_ID,
             mDescriptionId = UNDEFINED_RES_ID,
             mDeleteButtonId = UNDEFINED_RES_ID,
             mSaveButtonId = UNDEFINED_RES_ID,
@@ -65,7 +59,7 @@ public class MarkerWindow extends InfoWindow {
      */
     public MarkerWindow(int layoutResId, MapView mapView, MarkerEventHandler markerEventHandler) {
         super(layoutResId, mapView);
-        mainActivity = new MainActivity();
+
         this.markerEventHandler = markerEventHandler;
 
         if (mTitleId == UNDEFINED_RES_ID)
@@ -111,19 +105,7 @@ public class MarkerWindow extends InfoWindow {
                 }
             });
         }
-        //prompt the user to insert an image
-        Button insertImageButton = mView.findViewById(mInsertImageButtonId);
-        insertImageButton.setOnClickListener(v -> {
-
-//            mainActivity.openFileChooser();
-            mainActivity.openFileChooser();
-            System.out.println("outside the filerchooser");
-
-
-        });
-
     }
-
 
     /**
      * Will set res ids
@@ -138,7 +120,6 @@ public class MarkerWindow extends InfoWindow {
         mSaveButtonId = context.getResources().getIdentifier("id/save_button", null, packageName);
         mMoveButtonId = context.getResources().getIdentifier("id/move_button", null, packageName);
         mShareButtonId = context.getResources().getIdentifier("id/share_button", null, packageName);
-        mInsertImageButtonId= context.getResources().getIdentifier("id/insert_image", null, packageName);
         mSubDescriptionId = context.getResources().getIdentifier("id/bubble_subdescription", null, packageName);
         mImageId = context.getResources().getIdentifier("id/bubble_image", null, packageName);
         if (mTitleId == UNDEFINED_RES_ID || mDescriptionId == UNDEFINED_RES_ID
