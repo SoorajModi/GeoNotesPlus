@@ -1,6 +1,7 @@
 package de.hauke_stieler.geonotes.map;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
@@ -31,6 +32,8 @@ public class MarkerWindow extends InfoWindow {
         void onShare(Marker marker);
 
         void onMove(Marker marker);
+
+        void onUploadImage(Marker marker);
     }
 
     private MarkerEventHandler markerEventHandler;
@@ -109,12 +112,6 @@ public class MarkerWindow extends InfoWindow {
                 }
             });
         }
-        Button uploadButton = mView.findViewById(mUploadImageId); //button to upload an image
-        uploadButton.setOnClickListener(v ->
-        {
-            mainActivity.openFileChooser();// call a method from the MainActivity
-            System.out.println("outside the fileChooser");
-        });
     }
 
     /**
@@ -191,6 +188,12 @@ public class MarkerWindow extends InfoWindow {
         Button shareButton = mView.findViewById(mShareButtonId);
         shareButton.setOnClickListener(v -> {
             markerEventHandler.onShare(marker);
+            close();
+        });
+
+        Button uploadImageButton = mView.findViewById(mUploadImageId);
+        uploadImageButton.setOnClickListener(v -> {
+            markerEventHandler.onUploadImage(marker);
             close();
         });
 

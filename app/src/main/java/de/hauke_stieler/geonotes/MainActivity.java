@@ -337,6 +337,8 @@ public class MainActivity extends AppCompatActivity {
         editor.putFloat(getString(R.string.pref_last_location_zoom), zoom);
         editor.apply();
     }
+
+/* No longer needed but keeping here for reference
 //    https://stackoverflow.com/questions/5309190/android-pick-images-from-gallery  this is where the example is from, just to test if it works or not
     public void openFileChooser()
     { // this method is to prompt the user to upload an image
@@ -354,5 +356,5 @@ public class MainActivity extends AppCompatActivity {
             //TODO: action
         }
     }
-
+*/
 }

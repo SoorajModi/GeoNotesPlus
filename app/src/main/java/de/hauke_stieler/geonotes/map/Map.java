@@ -1,6 +1,7 @@
 package de.hauke_stieler.geonotes.map;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -39,6 +40,7 @@ import de.hauke_stieler.geonotes.notes.NoteStore;
  * Class to handles displaying and interacting with the Map seen on the main page
  */
 public class Map {
+    private static final int PICK_IMAGE = 1;
     private final MapView map;
     private final IMapController mapController;
     private MarkerWindow markerInfoWindow;
@@ -256,6 +258,17 @@ public class Map {
                 shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 map.getContext().startActivity(shareIntent);
                 setNormalIcon(marker);
+            }
+
+            @Override
+            public void onUploadImage(Marker marker) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                Activity mapContextActivity = (Activity) map.getContext();
+                mapContextActivity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+
+                // TODO: We need to call startActivityForResult from an activity
             }
 
             @Override
