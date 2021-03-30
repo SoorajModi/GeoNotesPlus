@@ -1,4 +1,4 @@
-package de.hauke_stieler.geonotes;
+package de.hauke_stieler.geonotes.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import de.hauke_stieler.geonotes.LoginActivity;
+import de.hauke_stieler.geonotes.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
