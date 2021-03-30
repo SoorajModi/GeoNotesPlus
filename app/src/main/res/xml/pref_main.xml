@@ -17,16 +17,18 @@
             android:title="Map scaling factor"
             android:key="scaling"
             android:icon="@drawable/ic_scaling"
+            android:inputType="numberDecimal"
             android:digits="0123456789."
-            android:inputType="number"
         />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Account">
-        <Preference
+        <EditTextPreference
             android:title="Change password"
             android:key="password"
+            android:inputType="textPassword"
             android:icon="@drawable/ic_password"
+            android:hint="New Password"
         />
 
         <Preference
