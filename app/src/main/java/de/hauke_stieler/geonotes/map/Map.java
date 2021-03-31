@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.PowerManager;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 
@@ -136,13 +137,11 @@ public class Map {
                 setNormalIcon(markerInfoWindow.getSelectedMarker());
                 // We don't need to deselect the marker or close the window as we will directly assign a new marker below
             }
-
             centerLocationWithOffset(marker.getPosition());
             selectMarker(marker);
 
             return true;
         };
-
         // React to touches on the map
         MapEventsReceiver mapEventsReceiver = new MapEventsReceiver() {
             @Override
@@ -259,16 +258,12 @@ public class Map {
                 map.getContext().startActivity(shareIntent);
                 setNormalIcon(marker);
             }
-
             @Override
             public void onUploadImage(Marker marker) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
+                // Create intent to let the user capture an image
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 Activity mapContextActivity = (Activity) map.getContext();
                 mapContextActivity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
-
-                // TODO: We need to call startActivityForResult from an activity
             }
 
             @Override

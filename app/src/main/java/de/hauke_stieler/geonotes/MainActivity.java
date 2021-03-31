@@ -338,23 +338,13 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-/* No longer needed but keeping here for reference
-//    https://stackoverflow.com/questions/5309190/android-pick-images-from-gallery  this is where the example is from, just to test if it works or not
-    public void openFileChooser()
-    { // this method is to prompt the user to upload an image
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE); // the app crashes from this line
-
-    }
+    // activity to accept the result of capturing the image
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE) {
-            //TODO: action
+            //TODO: store the image in the DB
         }
     }
-*/
 }

@@ -178,7 +178,6 @@ public class MarkerWindow extends InfoWindow {
             markerEventHandler.onDelete(marker);
             close();
         });
-
         Button saveButton = mView.findViewById(mSaveButtonId /* R.id.save_button */);
         saveButton.setOnClickListener(v -> {
             markerEventHandler.onSave(marker);
@@ -202,7 +201,6 @@ public class MarkerWindow extends InfoWindow {
             markerEventHandler.onMove(marker);
             close();
         });
-
     }
 
     /**

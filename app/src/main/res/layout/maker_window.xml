@@ -58,7 +58,7 @@
             android:id="@+id/insert_Image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Upload Image"
+            android:text="Capture Image"
             android:drawableLeft="@drawable/ic_baseline_image_search_24"/>
 
     </LinearLayout>
