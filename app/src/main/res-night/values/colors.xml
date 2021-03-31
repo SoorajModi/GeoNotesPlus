@@ -18,6 +18,6 @@
     <color name="icon_color_night">#ffffff</color>
 
     <color name="setting_bg_color_night">#141414</color>
-
+    <color name="setting_text_color_night">#ffffff</color>
 
 </resources>

@@ -129,7 +129,7 @@ public class SettingsActivity extends BaseActivity {
         ((Switch) findViewById(R.id.settings_dark_mode)).setChecked(prefDarkMode);
         ((Switch) findViewById(R.id.settings_dark_mode)).setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked) {
-                SkinCompatManager.getInstance().loadSkin("night", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN); // 后缀加载
+                SkinCompatManager.getInstance().loadSkin("night", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);
             }else {
                 SkinCompatManager.getInstance().restoreDefaultTheme();
             }
