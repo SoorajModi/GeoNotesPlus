@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
  * <p>
  * Author: Mustafa Al-Obaidi
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     EditText Email1, Password1;
     Button LoginBtn1;
@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                         Auth1.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {  // use the updatepaswword method from firebase
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {  //if the task is succefull
+                                if (task.isSuccessful()) {  //if the task is successful
                                     Toast.makeText(LoginActivity.this, "A password reset link has been sent to your email", Toast.LENGTH_SHORT).show();
                                 } else if (!task.isSuccessful()) {  // if the task fails
                                     Toast.makeText(LoginActivity.this, "Something went wrong :(, failed to send the link", Toast.LENGTH_SHORT).show();

@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,8 +28,14 @@
             android:label="Settings" />
         <activity android:name=".ListNotesActivity"
             android:label="All Notes"/>
+<<<<<<< HEAD
+        <activity android:name=".MainActivity">
+
+        </activity>
+=======
         <activity android:name=".MainActivity"
             android:label="@string/title_activity_main"/>
+>>>>>>> c7c6292e029c45ad988c4654769b1dd0de45fd46
 
         <service
             android:name=".firebase.MyFirebaseMessagingService"

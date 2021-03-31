@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,13 +14,11 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -43,16 +40,19 @@ import java.util.ArrayList;
 
 import de.hauke_stieler.geonotes.map.Map;
 import de.hauke_stieler.geonotes.map.TouchDownListener;
+import skin.support.SkinCompatManager;
 
 /**
  * Activity class that main page of the app
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
 
     private Map map;
     private SharedPreferences preferences;
+
+    boolean isNight = false;
 
     /**
      * Create Main Page
@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         createHamburgerMenu(toolbar);
-
         // Set HTML text of copyright label
         ((TextView) findViewById(R.id.copyright)).setMovementMethod(LinkMovementMethod.getInstance());
         ((TextView) findViewById(R.id.copyright)).setText(Html.fromHtml("© <a href=\"https://openstreetmap.org/copyright\">OpenStreetMap</a> contributors"));
@@ -142,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
         } else if ("scaling".equals(key)) {
             float mapScale = Float.parseFloat(pref.getString(key, "1.0f"));
             map.setMapScaleFactor(mapScale);
+<<<<<<< HEAD
+=======
         } else if ("dark".equals(key)) {
             boolean is_dark_mode = pref.getBoolean(key, false);
             Toolbar toolbar = findViewById(R.id.toolbar);
@@ -155,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 getWindow().setStatusBarColor(getResources().getColor(R.color.primary));
                 ll.setBackgroundColor(Color.WHITE);
             }
+>>>>>>> c7c6292e029c45ad988c4654769b1dd0de45fd46
         }
     }
 
@@ -202,6 +204,30 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+<<<<<<< HEAD
+        switch (item.getItemId()) {
+            case R.id.toolbar_btn_gps_follow:
+                boolean followingLocationEnabled = !map.isFollowLocationEnabled();
+                this.map.setLocationFollowMode(followingLocationEnabled);
+
+                if (followingLocationEnabled) {
+                    item.setIcon(R.drawable.ic_my_location_night);
+                } else {
+                    item.setIcon(R.drawable.ic_location_searching_night);
+                }
+                return true;
+            case R.id.list_all_notes:
+                // Stuff
+                System.out.println("listing all notes");
+                return true;
+            case R.id.settings:
+                System.out.println("going to settings menu");
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+=======
         if (item.getItemId() == R.id.toolbar_btn_gps_follow) {
             boolean followingLocationEnabled = !map.isFollowLocationEnabled();
             this.map.setLocationFollowMode(followingLocationEnabled);
@@ -212,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
                 item.setIcon(R.drawable.ic_location_searching);
             }
             return true;
+>>>>>>> c7c6292e029c45ad988c4654769b1dd0de45fd46
         }
         return super.onOptionsItemSelected(item);
     }
@@ -301,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
         TouchDownListener touchDownListener = () -> {
             ActionMenuItemView menuItem = findViewById(R.id.toolbar_btn_gps_follow);
             if (menuItem != null) {
-                menuItem.setIcon(getResources().getDrawable(R.drawable.ic_location_searching));
+                menuItem.setIcon(getResources().getDrawable(R.drawable.ic_location_searching_night));
             }
         };
 

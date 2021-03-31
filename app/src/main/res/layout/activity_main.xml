@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:background="@color/primary"
             android:elevation="5dp"
+            app:titleTextColor="@color/white"
             android:theme="@style/ToolbarTheme" />
 
             <RelativeLayout
@@ -48,7 +49,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/nav_color"
         android:id="@+id/navigationView"
         app:menu="@menu/navigation_menu"
-        app:headerLayout="@layout/nav_header"/>
+        app:headerLayout="@layout/nav_header"
+        app:itemIconTint="@color/icon_color"
+        app:itemTextColor="@color/icon_color"/>
 </androidx.drawerlayout.widget.DrawerLayout>
