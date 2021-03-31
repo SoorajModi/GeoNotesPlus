@@ -29,10 +29,12 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         // Lookup view for data population
         TextView noteDesc = (TextView) convertView.findViewById(R.id.noteDescription);
         TextView noteLoc = (TextView) convertView.findViewById(R.id.noteLocation);
+        TextView noteDate = (TextView) convertView.findViewById(R.id.noteDate);
 
         // Populate the data into the template view using the data object
         noteDesc.setText(note.description);
         noteLoc.setText(String.format("Location: %s, %s", note.lat, note.lon));
+        noteDate.setText(String.format("Date: %s", note.date));
 
         // Return the completed view to render on screen
         return convertView;

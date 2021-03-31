@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">GeoNotes</string>
+    <string name="app_name">GN+</string>
+    <string name="app_long_name">GeoNotes+</string>
+    <string name="title_activity_main">GeoNotes+</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Preferences -->
@@ -35,4 +37,17 @@
     <string name="change_password">Change Password</string>
     <string name="log_out">Log out</string>
     <string name="dark_mode">Dark mode</string>
+    <string name="date">Date</string>
+    <string name="sort">sort</string>
+    <string name="gnplus_logo_content_desc">GeoNotes+ Logo</string>
+    <string name="login_header">Log in to GeoNotes+</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="button_login">Log in</string>
+    <string name="button_create_account">New Here? Create Account</string>
+    <string name="button_forget_password">Forgot Password?</string>
+    <string name="button_register">Register</string>
+    <string name="button_already_registered">Already Registerd? Log in Here</string>
+    <string name="header_register">Create GeoNotes+ Account</string>
+    <string name="hint_name">Full Name</string>
 </resources>
