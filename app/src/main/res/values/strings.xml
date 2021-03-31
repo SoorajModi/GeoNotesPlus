@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">GN+</string>
+    <string name="app_long_name">GeoNotes+</string>
+    <string name="title_activity_main">GeoNotes+</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preferences -->
+    <string name="pref_file">geonotes_preferences</string>
+    <string name="pref_zoom_buttons">PREF_ZOOM_BUTTONS</string>
+    <string name="pref_map_scaling">PREF_MAP_SCALING</string>
+    <string name="pref_last_location_lat">PREF_LAST_LOCATION_LAT</string>
+    <string name="pref_last_location_lon">PREF_LAST_LOCATION_LON</string>
+    <string name="pref_last_location_zoom">PREF_LAST_LOCATION_ZOOM</string>
+    <string name="pref_dark_mode">PREF_DARK_MODE</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="Open">open</string>
+    <string name="Close">close</string>
+    <string name="all_notes">All notes</string>
+    <string name="settings">Settings</string>
+    <string name="map_contributor">© OpenStreetMap contributors ODbL</string>
+    <string name="locate">Locate</string>
+    <string name="icon">Icon</string>
+    <string name="note">Note</string>
+    <string name="location">Location</string>
+    <string name="list_notes">List Notes</string>
+    <string name="show_zoom_buttons">Show zoom buttons</string>
+    <string name="map_scaling_factor">Map scaling factor</string>
+    <string name="change_password">Change Password</string>
+    <string name="log_out">Log out</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="date">Date</string>
+    <string name="sort">sort</string>
+    <string name="gnplus_logo_content_desc">GeoNotes+ Logo</string>
+    <string name="login_header">Log in to GeoNotes+</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="button_login">Log in</string>
+    <string name="button_create_account">New Here? Create Account</string>
+    <string name="button_forget_password">Forgot Password?</string>
+    <string name="button_register">Register</string>
+    <string name="button_already_registered">Already Registerd? Log in Here</string>
+    <string name="header_register">Create GeoNotes+ Account</string>
+    <string name="hint_name">Full Name</string>
+</resources>
