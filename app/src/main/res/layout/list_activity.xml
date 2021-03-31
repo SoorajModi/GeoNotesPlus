@@ -12,6 +12,7 @@
         android:layout_height="67dp"
         android:background="@color/primary"
         android:elevation="5dp"
+        app:titleTextColor="@color/white"
         android:theme="@style/ToolbarTheme" />
 
     <ListView

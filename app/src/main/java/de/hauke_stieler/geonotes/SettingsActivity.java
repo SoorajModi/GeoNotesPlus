@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,11 +27,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import skin.support.SkinCompatManager;
+
 
 /**
  * Activity class that handles application settings
  */
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
 
     SharedPreferences preferences;
     Button ChangePassword;
@@ -57,7 +60,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         preferences = getSharedPreferences(getString(R.string.pref_file), MODE_PRIVATE);
 
-        setDarkMode();
         load();
 
         ChangePassword = findViewById(R.id.ChangePass);
@@ -110,49 +112,6 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         });
-
-
-    }
-
-    /**
-     * Switch application to dark mode
-     */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void setDarkMode() {
-        Switch switchDarkMode = findViewById(R.id.settings_dark_mode);
-        switchDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toolbar toolbar = findViewById(R.id.settings_toolbar);
-                LinearLayout ll = findViewById(R.id.settings_page);
-                TextView zoom_button = findViewById(R.id.zoon_button);
-                TextView scale_factor = findViewById(R.id.scale_factor);
-                TextView dark_mode_button = findViewById(R.id.dark_mode_button);
-                EditText input = findViewById(R.id.settings_scale_input);
-                Intent intent = new Intent();
-
-                if (isChecked) {
-                    toolbar.setBackgroundColor(getResources().getColor(R.color.light_grey));
-                    getWindow().setStatusBarColor(getResources().getColor(R.color.black));
-                    ll.setBackgroundColor(getResources().getColor(R.color.dark_grey));
-                    zoom_button.setTextColor(Color.WHITE);
-                    scale_factor.setTextColor(Color.WHITE);
-                    dark_mode_button.setTextColor(Color.WHITE);
-                    input.setTextColor(Color.WHITE);
-                    intent.putExtra("Dark Mode", "true");
-                } else {
-                    toolbar.setBackgroundColor(getResources().getColor(R.color.primary_dark));
-                    getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
-                    ll.setBackgroundColor(Color.WHITE);
-                    zoom_button.setTextColor(Color.BLACK);
-                    scale_factor.setTextColor(Color.BLACK);
-                    dark_mode_button.setTextColor(Color.BLACK);
-                    input.setTextColor(Color.BLACK);
-                    intent.putExtra("Dark Mode", "false");
-                }
-                intent.setClass(SettingsActivity.this, MainActivity.class);
-            }
-        });
     }
 
     /**
@@ -168,7 +127,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         boolean prefDarkMode = preferences.getBoolean(getString(R.string.pref_dark_mode), false);
         ((Switch) findViewById(R.id.settings_dark_mode)).setChecked(prefDarkMode);
-        setDarkMode();
+        ((Switch) findViewById(R.id.settings_dark_mode)).setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked) {
+                SkinCompatManager.getInstance().loadSkin("night", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN); // 后缀加载
+            }else {
+                SkinCompatManager.getInstance().restoreDefaultTheme();
+            }
+        });
     }
 
     /**

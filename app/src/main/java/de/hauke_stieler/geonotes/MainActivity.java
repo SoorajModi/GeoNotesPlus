@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,13 +14,11 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -42,16 +39,19 @@ import java.util.ArrayList;
 
 import de.hauke_stieler.geonotes.map.Map;
 import de.hauke_stieler.geonotes.map.TouchDownListener;
+import skin.support.SkinCompatManager;
 
 /**
  * Activity class that main page of the app
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
 
     private Map map;
     private SharedPreferences preferences;
+
+    boolean isNight = false;
 
     /**
      * Create Main Page
@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         createHamburgerMenu(toolbar);
-
         // Set HTML text of copyright label
         ((TextView) findViewById(R.id.copyright)).setMovementMethod(LinkMovementMethod.getInstance());
         ((TextView) findViewById(R.id.copyright)).setText(Html.fromHtml("© <a href=\"https://openstreetmap.org/copyright\">OpenStreetMap</a> contributors"));
@@ -140,19 +139,6 @@ public class MainActivity extends AppCompatActivity {
         } else if (getString(R.string.pref_map_scaling).equals(key)) {
             float mapScale = pref.getFloat(key, 1.0f);
             map.setMapScaleFactor(mapScale);
-        } else if (getString(R.string.pref_dark_mode).equals(key)) {
-            boolean is_dark_mode = pref.getBoolean(key, false);
-            Toolbar toolbar = findViewById(R.id.toolbar);
-            LinearLayout ll = findViewById(R.id.main_page);
-            if (is_dark_mode) {
-                toolbar.setBackgroundColor(getResources().getColor(R.color.light_grey));
-                getWindow().setStatusBarColor(getResources().getColor(R.color.black));
-                ll.setBackgroundColor(getResources().getColor(R.color.dark_grey));
-            } else {
-                toolbar.setBackgroundColor(getResources().getColor(R.color.primary_dark));
-                getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
-                ll.setBackgroundColor(Color.WHITE);
-            }
         }
     }
 
@@ -212,9 +198,9 @@ public class MainActivity extends AppCompatActivity {
                 this.map.setLocationFollowMode(followingLocationEnabled);
 
                 if (followingLocationEnabled) {
-                    item.setIcon(R.drawable.ic_my_location);
+                    item.setIcon(R.drawable.ic_my_location_night);
                 } else {
-                    item.setIcon(R.drawable.ic_location_searching);
+                    item.setIcon(R.drawable.ic_location_searching_night);
                 }
                 return true;
             case R.id.list_all_notes:
@@ -316,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
         TouchDownListener touchDownListener = () -> {
             ActionMenuItemView menuItem = findViewById(R.id.toolbar_btn_gps_follow);
             if (menuItem != null) {
-                menuItem.setIcon(getResources().getDrawable(R.drawable.ic_location_searching));
+                menuItem.setIcon(getResources().getDrawable(R.drawable.ic_location_searching_night));
             }
         };
 

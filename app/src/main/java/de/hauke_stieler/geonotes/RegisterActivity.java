@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
  * <p>
  * Author: Mustafa Al-Obaidi
  */
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
     EditText FullName1, Email1, Password1;
     Button RegisterBtn1;
     TextView LoginBtn1;

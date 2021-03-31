@@ -1,9 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settings_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:orientation="vertical"
-    android:id="@+id/settings_page">
+    android:background="@color/setting_bg_color"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/settings_toolbar"
@@ -11,7 +12,8 @@
         android:layout_height="wrap_content"
         android:background="@color/primary"
         android:elevation="5dp"
-        android:theme="@style/ToolbarTheme" />
+        android:theme="@style/ToolbarTheme"
+        app:titleTextColor="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,6 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/show_zoom_buttons"
+                android:textColor="@color/setting_text_color"
                 android:textSize="16sp" />
 
             <Space
@@ -54,6 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/map_scaling_factor"
+                android:textColor="@color/setting_text_color"
                 android:textSize="16dp" />
 
             <Space
@@ -65,6 +69,7 @@
                 android:id="@+id/settings_scale_input"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
+                android:textColor="@color/register_edit_bg_color"
                 android:digits="0123456789."
                 android:inputType="number" />
         </LinearLayout>
@@ -80,6 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dark_mode"
+                android:textColor="@color/setting_text_color"
                 android:textSize="16dp" />
 
             <Space
