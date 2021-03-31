@@ -16,21 +16,26 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.GeoNotes">
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RegisterActivity" />
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" />
+            android:label="Settings" />
         <activity android:name=".ListNotesActivity"
             android:label="All Notes"/>
+<<<<<<< HEAD
         <activity android:name=".MainActivity">
 
         </activity>
+=======
+        <activity android:name=".MainActivity"
+            android:label="@string/title_activity_main"/>
+>>>>>>> c7c6292e029c45ad988c4654769b1dd0de45fd46
 
         <service
             android:name=".firebase.MyFirebaseMessagingService"

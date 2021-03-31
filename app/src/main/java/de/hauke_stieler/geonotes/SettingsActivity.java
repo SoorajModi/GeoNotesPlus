@@ -1,32 +1,14 @@
 package de.hauke_stieler.geonotes;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import de.hauke_stieler.geonotes.settings.SettingsFragment;
 
+<<<<<<< HEAD
 import skin.support.SkinCompatManager;
 
 
@@ -34,29 +16,25 @@ import skin.support.SkinCompatManager;
  * Activity class that handles application settings
  */
 public class SettingsActivity extends BaseActivity {
+=======
+public class SettingsActivity extends AppCompatActivity {
+    SettingsFragment settingsFragment = new SettingsFragment();
+>>>>>>> c7c6292e029c45ad988c4654769b1dd0de45fd46
 
-    SharedPreferences preferences;
-    Button ChangePassword;
-    FirebaseAuth Auth1;
-    Button LogOut;
-
-    /**
-     * Create settings page
-     *
-     * @param savedInstanceState - application state
-     */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_activity);
+        setContentView((R.layout.activity_settings));
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.settings_container, settingsFragment)
+                .commit();
 
         Toolbar toolbar = findViewById(R.id.settings_toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+<<<<<<< HEAD
 
         preferences = getSharedPreferences(getString(R.string.pref_file), MODE_PRIVATE);
 
@@ -161,17 +139,13 @@ public class SettingsActivity extends BaseActivity {
         editor.putBoolean(getString(R.string.pref_dark_mode), is_dark_mode);
 
         editor.commit();
+=======
+>>>>>>> c7c6292e029c45ad988c4654769b1dd0de45fd46
     }
 
-    /**
-     * Save settings and finish activity
-     */
     @Override
     public boolean onSupportNavigateUp() {
-        save();
         finish();
         return true;
     }
-
-
 }
