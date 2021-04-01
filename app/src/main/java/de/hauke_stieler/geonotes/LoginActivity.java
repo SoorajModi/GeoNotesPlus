@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
  * <p>
  * Author: Mustafa Al-Obaidi
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     EditText Email1, Password1;
     Button LoginBtn1;
@@ -44,13 +44,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Email1 = findViewById(R.id.email_field);
-        Password1 = findViewById(R.id.password_field);
+        Email1 = findViewById(R.id.Email);
+        Password1 = findViewById(R.id.password);
         Auth1 = FirebaseAuth.getInstance();
         FirebaseUser user1 = Auth1.getCurrentUser();
-        LoginBtn1 = findViewById(R.id.login_button);
-        CreateBtn1 = findViewById(R.id.create_account_button);
-        forgotPassword = findViewById(R.id.forgot_password_button);
+        LoginBtn1 = findViewById(R.id.LoginBtn);
+        CreateBtn1 = findViewById(R.id.textView3);
+        forgotPassword = findViewById(R.id.forgotPassword);
 
 
         LoginBtn1.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                     Password1.setError("Password is Required");
                     return;
                 } else if (passwordTest.length() < 6) {
-                    Password1.setError("Password must greater or equal to 6 characters");
+                    Password1.setError("Password must greater or equal to 6 charchters");
                     return;
                 }
 
@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                         Auth1.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {  // use the updatepaswword method from firebase
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {  //if the task is succefull
+                                if (task.isSuccessful()) {  //if the task is successful
                                     Toast.makeText(LoginActivity.this, "A password reset link has been sent to your email", Toast.LENGTH_SHORT).show();
                                 } else if (!task.isSuccessful()) {  // if the task fails
                                     Toast.makeText(LoginActivity.this, "Something went wrong :(, failed to send the link", Toast.LENGTH_SHORT).show();
