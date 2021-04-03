@@ -12,7 +12,7 @@ import static junit.framework.TestCase.assertEquals;
 public class TestSaltedHashPassword {
     public static void main(String[] args) {
         SaltedHashPassword s = new SaltedHashPassword();
-        /**
+        /*
          * 	Password	Salt				Salted_Hash_Password
          * 	admin123	C78CED15EDD3A8CC	1C9D79B8AAC78E03D991955F9EEAD7DDB431EA7B885CDBC8
          */

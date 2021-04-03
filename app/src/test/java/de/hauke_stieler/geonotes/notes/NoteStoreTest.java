@@ -1,4 +1,4 @@
-package de.hauke_stieler.geonotes;
+package de.hauke_stieler.geonotes.notes;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
