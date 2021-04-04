@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="page_bg_color_night">#141414</color>
+
+    <color name="primary_night">#141414</color>
+    <color name="primary_dark_night">#141414</color>
+
+    <color name="register_bg_color_night">#141414</color>
+    <color name="register_text_color_night">#F8F8F8</color>
+    <color name="register_edit_bg_color_night">#F8F8F8</color>
+    <color name="register_edit_text_color_night">#141414</color>
+    <color name="register_edit_text_hint_color_night">#141414</color>
+
+
+    <color name="test_color_night">#4caf50</color>
+    <color name="nav_color_night">#141414</color>
+    <color name="icon_color_night">#ffffff</color>
+
+    <color name="setting_bg_color_night">#141414</color>
+    <color name="setting_text_color_night">#ffffff</color>
+
+</resources>

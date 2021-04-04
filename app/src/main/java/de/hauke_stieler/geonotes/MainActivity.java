@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,20 +14,17 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.preference.PreferenceManager;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -43,11 +39,12 @@ import java.util.ArrayList;
 
 import de.hauke_stieler.geonotes.map.Map;
 import de.hauke_stieler.geonotes.map.TouchDownListener;
+import skin.support.SkinCompatManager;
 
 /**
  * Activity class that main page of the app
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
 
@@ -55,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     public static final int PICK_IMAGE = 1;
 
+
+    boolean isNight = false;
 
     /**
      * Create Main Page
@@ -70,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         createHamburgerMenu(toolbar);
-
         // Set HTML text of copyright label
         ((TextView) findViewById(R.id.copyright)).setMovementMethod(LinkMovementMethod.getInstance());
         ((TextView) findViewById(R.id.copyright)).setText(Html.fromHtml("© <a href=\"https://openstreetmap.org/copyright\">OpenStreetMap</a> contributors"));
@@ -118,17 +116,16 @@ public class MainActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadPreferences() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        for (String key : sharedPreferences.getAll().keySet()) {
-            preferenceChanged(sharedPreferences, key);
+        for (String key : preferences.getAll().keySet()) {
+            preferenceChanged(preferences, key);
         }
 
         float lat = preferences.getFloat(getString(R.string.pref_last_location_lat), 0f);
         float lon = preferences.getFloat(getString(R.string.pref_last_location_lon), 0f);
         float zoom = preferences.getFloat(getString(R.string.pref_last_location_zoom), 2);
+
         map.setLocation(lat, lon, zoom);
     }
-
 
     /**
      * Update user preference upon change
@@ -138,25 +135,12 @@ public class MainActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void preferenceChanged(SharedPreferences pref, String key) {
-        if ("zoom".equals(key)) {
+        if (getString(R.string.pref_zoom_buttons).equals(key)) {
             boolean showZoomButtons = pref.getBoolean(key, true);
             map.setZoomButtonVisibility(showZoomButtons);
-        } else if ("scaling".equals(key)) {
-            float mapScale = Float.parseFloat(pref.getString(key, "1.0f"));
+        } else if (getString(R.string.pref_map_scaling).equals(key)) {
+            float mapScale = pref.getFloat(key, 1.0f);
             map.setMapScaleFactor(mapScale);
-        } else if ("dark".equals(key)) {
-            boolean is_dark_mode = pref.getBoolean(key, false);
-            Toolbar toolbar = findViewById(R.id.toolbar);
-            LinearLayout ll = findViewById(R.id.main_page);
-            if (is_dark_mode) {
-                toolbar.setBackgroundColor(getResources().getColor(R.color.light_grey));
-                getWindow().setStatusBarColor(getResources().getColor(R.color.black));
-                ll.setBackgroundColor(getResources().getColor(R.color.dark_grey));
-            } else {
-                toolbar.setBackgroundColor(getResources().getColor(R.color.primary));
-                getWindow().setStatusBarColor(getResources().getColor(R.color.primary));
-                ll.setBackgroundColor(Color.WHITE);
-            }
         }
     }
 
@@ -167,21 +151,27 @@ public class MainActivity extends AppCompatActivity {
         t.syncState();
 
         NavigationView nv = (NavigationView) findViewById(R.id.navigationView);
-        nv.setNavigationItemSelectedListener(item -> {
-            Intent intent;
-            switch (item.getItemId()) {
-                case R.id.list_all_notes:
-                    intent = new Intent(MainActivity.this, ListNotesActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.settings:
-                    intent = new Intent(MainActivity.this, SettingsActivity.class);
-                    startActivity(intent);
-                    break;
-                default:
-                    break;
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.list_all_notes:
+                        System.out.println("GN: Listing all notes");
+                        intent = new Intent(MainActivity.this, ListNotesActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.settings:
+                        System.out.println("GN: Going to settings menu");
+                        intent = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
+                return true;
             }
-            return true;
         });
     }
 
@@ -204,18 +194,29 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.toolbar_btn_gps_follow) {
-            boolean followingLocationEnabled = !map.isFollowLocationEnabled();
-            this.map.setLocationFollowMode(followingLocationEnabled);
+        switch (item.getItemId()) {
+            case R.id.toolbar_btn_gps_follow:
+                boolean followingLocationEnabled = !map.isFollowLocationEnabled();
+                this.map.setLocationFollowMode(followingLocationEnabled);
 
-            if (followingLocationEnabled) {
-                item.setIcon(R.drawable.ic_my_location);
-            } else {
-                item.setIcon(R.drawable.ic_location_searching);
-            }
-            return true;
+                if (followingLocationEnabled) {
+                    item.setIcon(R.drawable.ic_my_location_night);
+                } else {
+                    item.setIcon(R.drawable.ic_location_searching_night);
+                }
+                return true;
+            case R.id.list_all_notes:
+                // Stuff
+                System.out.println("listing all notes");
+                return true;
+            case R.id.settings:
+                System.out.println("going to settings menu");
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -303,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
         TouchDownListener touchDownListener = () -> {
             ActionMenuItemView menuItem = findViewById(R.id.toolbar_btn_gps_follow);
             if (menuItem != null) {
-                menuItem.setIcon(getResources().getDrawable(R.drawable.ic_location_searching));
+                menuItem.setIcon(getResources().getDrawable(R.drawable.ic_location_searching_night));
             }
         };
 
