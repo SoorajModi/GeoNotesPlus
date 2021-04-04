@@ -10,20 +10,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/note"
-        android:textColor="@color/setting_text_color"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
 
     <TextView
         android:id="@+id/noteDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/setting_text_color"
         android:text="@string/date"/>
 
     <TextView
         android:id="@+id/noteLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/setting_text_color"
         android:text="@string/location"/>
 </LinearLayout>
