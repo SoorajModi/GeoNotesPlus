@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Map map;
     private SharedPreferences preferences;
+    public static final int PICK_IMAGE = 1;
+
 
     /**
      * Create Main Page
@@ -319,5 +321,15 @@ public class MainActivity extends AppCompatActivity {
         editor.putFloat(getString(R.string.pref_last_location_lon), (float) location.getLongitude());
         editor.putFloat(getString(R.string.pref_last_location_zoom), zoom);
         editor.apply();
+    }
+
+    // activity to accept the result of capturing the image
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE) {
+            //TODO: store the image in the DB
+        }
     }
 }

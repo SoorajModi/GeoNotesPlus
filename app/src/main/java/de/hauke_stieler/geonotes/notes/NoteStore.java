@@ -115,7 +115,6 @@ public class NoteStore extends SQLiteOpenHelper {
 
         db.update(NOTES_TABLE_NAME, values, NOTES_COL_ID + " = ?", new String[]{"" + id});
     }
-
     /**
      * Updates geolocation of a note
      *
