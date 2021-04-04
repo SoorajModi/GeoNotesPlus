@@ -214,7 +214,6 @@ public class Map {
                 // Task came from database and should therefore be removed.
                 if (marker.getId() != null) {
                     noteStore.removeNote(Long.parseLong(marker.getId()));
-                    // TODO: Remove media file from storage?
                 }
                 map.getOverlays().remove(marker);
             }
@@ -233,7 +232,6 @@ public class Map {
                     Note newNote = new Note(0, marker.getSnippet(), marker.getPosition().getLatitude(), marker.getPosition().getLongitude(), Note.MediaType.NULL, Uri.parse(""), date_str);
                     long id = noteStore.addNote(newNote);
                     marker.setId("" + id);
-                    // TODO: Saving the audio or image file using MediaStore API
                 }
 
                 setNormalIcon(marker);
@@ -258,12 +256,14 @@ public class Map {
                 map.getContext().startActivity(shareIntent);
                 setNormalIcon(marker);
             }
+
             @Override
             public void onUploadImage(Marker marker) {
                 // Create intent to let the user capture an image
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 Activity mapContextActivity = (Activity) map.getContext();
                 mapContextActivity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+                setNormalIcon(marker);
             }
 
             @Override
