@@ -4,10 +4,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
 
-public class MainActivityTest {
+public class ListNotesActivityTest {
     @Test
-    public void should_construct_main_activity() {
-        MainActivity activity = new MainActivity();
+    public void should_construct_settings_activity() {
+        ListNotesActivity activity = new ListNotesActivity();
         assertNotNull(activity);
     }
 }
