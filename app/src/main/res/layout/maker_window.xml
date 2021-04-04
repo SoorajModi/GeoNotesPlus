@@ -24,28 +24,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Move"
-            android:drawableLeft="@drawable/ic_move_night"/>
+            android:drawableLeft="@drawable/ic_move"/>
 
         <Button
             android:id="@+id/delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delete"
-            android:drawableLeft="@drawable/ic_delete_night"/>
+            android:drawableLeft="@drawable/ic_delete"/>
 
         <Button
             android:id="@+id/share_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Share"
-            android:drawableLeft="@drawable/ic_share_night"/>
+            android:drawableLeft="@drawable/ic_share"/>
 
         <Button
             android:id="@+id/save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="OK"
-            android:drawableLeft="@drawable/ic_save_night"/>
+            android:drawableLeft="@drawable/ic_save"/>
     </LinearLayout>
 
     <LinearLayout

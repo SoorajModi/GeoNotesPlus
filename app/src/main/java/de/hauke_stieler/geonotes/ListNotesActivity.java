@@ -23,7 +23,7 @@ import de.hauke_stieler.geonotes.notes.NoteStore;
 /*
  * Activity class for listing user notes
  */
-public class ListNotesActivity extends BaseActivity {
+public class ListNotesActivity extends AppCompatActivity {
     private NoteStore noteStore;
     private ArrayAdapter<Note> arrayAdapter;
     private Button btn_sort;

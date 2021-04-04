@@ -58,9 +58,9 @@ dependencies {
     androidTestImplementation 'com.android.support:support-annotations:28.0.0'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
 
-    implementation 'skin.support:skin-support:4.0.5'
-    implementation 'skin.support:skin-support-appcompat:4.0.5'
-    implementation 'skin.support:skin-support-design:4.0.5'
-    implementation 'skin.support:skin-support-cardview:4.0.5'
-    implementation 'skin.support:skin-support-constraint-layout:4.0.5'
+    implementation 'skin.support:skin-support:4.0.5'                   // skin-support
+    implementation 'skin.support:skin-support-appcompat:4.0.5'         // skin-support 基础控件支持
+    implementation 'skin.support:skin-support-design:4.0.5'            // skin-support-design material design 控件支持[可选]
+    implementation 'skin.support:skin-support-cardview:4.0.5'          // skin-support-cardview CardView 控件支持[可选]
+    implementation 'skin.support:skin-support-constraint-layout:4.0.5' // skin-support-constraint-layout ConstraintLayout 控件支持[可选]
 }
