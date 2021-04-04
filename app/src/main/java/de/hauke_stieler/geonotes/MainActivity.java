@@ -330,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE) {
             //TODO: store the image in the DB
+            Toast.makeText(this, "Image have been captured succefully", Toast.LENGTH_SHORT).show();
         }
     }
 }
