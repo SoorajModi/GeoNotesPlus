@@ -1,6 +1,7 @@
 package de.hauke_stieler.geonotes.map;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -8,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.PowerManager;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 
@@ -39,6 +41,7 @@ import de.hauke_stieler.geonotes.notes.NoteStore;
  * Class to handles displaying and interacting with the Map seen on the main page
  */
 public class Map {
+    private static final int PICK_IMAGE = 1;
     private final MapView map;
     private final IMapController mapController;
     private MarkerWindow markerInfoWindow;
@@ -134,13 +137,11 @@ public class Map {
                 setNormalIcon(markerInfoWindow.getSelectedMarker());
                 // We don't need to deselect the marker or close the window as we will directly assign a new marker below
             }
-
             centerLocationWithOffset(marker.getPosition());
             selectMarker(marker);
 
             return true;
         };
-
         // React to touches on the map
         MapEventsReceiver mapEventsReceiver = new MapEventsReceiver() {
             @Override
@@ -213,7 +214,6 @@ public class Map {
                 // Task came from database and should therefore be removed.
                 if (marker.getId() != null) {
                     noteStore.removeNote(Long.parseLong(marker.getId()));
-                    // TODO: Remove media file from storage?
                 }
                 map.getOverlays().remove(marker);
             }
@@ -232,7 +232,6 @@ public class Map {
                     Note newNote = new Note(0, marker.getSnippet(), marker.getPosition().getLatitude(), marker.getPosition().getLongitude(), Note.MediaType.NULL, Uri.parse(""), date_str);
                     long id = noteStore.addNote(newNote);
                     marker.setId("" + id);
-                    // TODO: Saving the audio or image file using MediaStore API
                 }
 
                 setNormalIcon(marker);
@@ -255,6 +254,15 @@ public class Map {
                 Intent shareIntent = Intent.createChooser(sendIntent, null);
                 shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 map.getContext().startActivity(shareIntent);
+                setNormalIcon(marker);
+            }
+
+            @Override
+            public void onUploadImage(Marker marker) {
+                // Create intent to let the user capture an image
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Activity mapContextActivity = (Activity) map.getContext();
+                mapContextActivity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
                 setNormalIcon(marker);
             }
 

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="General">
+        <SwitchPreferenceCompat
+            android:title="Show zoom buttons"
+            android:key="zoom"
+            android:icon="@drawable/ic_zoom"
+            android:defaultValue="true"
+        />
+
+        <SwitchPreferenceCompat
+            android:title="Dark mode"
+            android:key="dark"
+            android:icon="@drawable/ic_dark_mode"
+        />
+
+        <EditTextPreference
+            android:title="Map scaling factor"
+            android:key="scaling"
+            android:icon="@drawable/ic_scaling"
+            android:inputType="numberDecimal"
+            android:digits="0123456789."
+        />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Account">
+        <EditTextPreference
+            android:title="Change password"
+            android:key="password"
+            android:inputType="textPassword"
+            android:icon="@drawable/ic_password"
+            android:hint="New Password"
+        />
+
+        <Preference
+            android:title="Log out"
+            android:key="logout"
+            android:icon="@drawable/ic_logout"
+        />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="About">
+        <Preference
+            android:title="App Version"
+            android:summary="GeoNotes+ ver. 1.0 (5 April 2021)"
+            android:icon="@drawable/ic_version"
+            android:selectable="false"
+        />
+
+        <Preference
+            android:title="Development Team"
+            android:summary="Rafael Wiska-Ilnicki\nSooraj Modi\nO'Neal Yako\nXiaotian Dai\nMustafa Al-Obaidi"
+            android:icon="@drawable/ic_team"
+            android:selectable="false"
+        />
+    </PreferenceCategory>
+</PreferenceScreen>

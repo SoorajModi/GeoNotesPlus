@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
  * <p>
  * Author: Mustafa Al-Obaidi
  */
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends AppCompatActivity {
     EditText FullName1, Email1, Password1;
     Button RegisterBtn1;
     TextView LoginBtn1;
@@ -39,11 +39,11 @@ public class RegisterActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        FullName1 = findViewById(R.id.FullName);
-        Email1 = findViewById(R.id.Email);
-        Password1 = findViewById(R.id.Password);
-        RegisterBtn1 = findViewById(R.id.RegisterBtn);
-        LoginBtn1 = findViewById(R.id.LoginLink);
+        FullName1 = findViewById(R.id.name_field);
+        Email1 = findViewById(R.id.email_field);
+        Password1 = findViewById(R.id.password_field);
+        RegisterBtn1 = findViewById(R.id.register_button);
+        LoginBtn1 = findViewById(R.id.already_registered_button);
         Auth1 = FirebaseAuth.getInstance();
 
 
